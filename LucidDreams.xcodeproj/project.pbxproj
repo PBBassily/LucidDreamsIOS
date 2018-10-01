@@ -54,14 +54,22 @@
 		38D8D85C21626EA70073962D /* LucidDreams */ = {
 			isa = PBXGroup;
 			children = (
-				38D8D85D21626EA70073962D /* AppDelegate.swift */,
+				38D8D86F21626EE10073962D /* Supporting Files */,
 				38D8D85F21626EA70073962D /* ViewController.swift */,
 				38D8D86121626EA70073962D /* Main.storyboard */,
-				38D8D86421626EA90073962D /* Assets.xcassets */,
-				38D8D86621626EA90073962D /* LaunchScreen.storyboard */,
 				38D8D86921626EA90073962D /* Info.plist */,
 			);
 			path = LucidDreams;
+			sourceTree = "<group>";
+		};
+		38D8D86F21626EE10073962D /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				38D8D85D21626EA70073962D /* AppDelegate.swift */,
+				38D8D86421626EA90073962D /* Assets.xcassets */,
+				38D8D86621626EA90073962D /* LaunchScreen.storyboard */,
+			);
+			path = "Supporting Files";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
