@@ -8,19 +8,17 @@
 
 import UIKit
 
-class DreamTableViewController: UITableViewController {
+class DreamTableViewController: UITableViewController, UICollectionViewDelegate {
 
     
+    var creatureCollectionView: UICollectionView?
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         self.view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard)))
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
+        
+      
     }
 
     
@@ -29,7 +27,7 @@ class DreamTableViewController: UITableViewController {
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return 3
+        return 5
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -42,6 +40,8 @@ class DreamTableViewController: UITableViewController {
         case 0: return ""
         case 1: return "Description"
         case 2: return "Number of Creatures"
+        case 3: return "Creatures"
+        case 4: return "Description"
         default : return ""
         }
     }
@@ -59,18 +59,28 @@ class DreamTableViewController: UITableViewController {
             lucidCell.lucidImageView.image = UIImage(named: "shark")
             
         }
-        // if indexPath.section == 1 || indexPath.section == 2
-        else  {
+        
+        else if indexPath.section == 1 || indexPath.section == 2 || indexPath.section == 4 {
            cell = tableView.dequeueReusableCell(withIdentifier: "InputCell", for: indexPath)
             if indexPath.section == 2 {
                 let inputCell = cell as! InputTableViewCell
                 inputCell.inputTextField.keyboardType = .asciiCapableNumberPad
             }
         }
+        else {
+           cell = tableView.dequeueReusableCell(withIdentifier: "CollectViewCell", for: indexPath)
+            let creaturesCell = cell as! AllCreaturesTableViewCell
+            creaturesCell.creaturesCollectionView.reloadData()
+            
+        }
         
         return cell
     }
  
+    
+    //MARK: - CollectionView
+    
+    
     
     //MARK: - Actions
     
