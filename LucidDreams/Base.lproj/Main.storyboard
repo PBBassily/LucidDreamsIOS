@@ -91,6 +91,7 @@
                                 <connections>
                                     <outlet property="lucidImageView" destination="zDS-Bf-5Oh" id="u2w-vB-S2I"/>
                                     <outlet property="lucidLabel" destination="OIe-gV-xeK" id="TkH-22-ZIl"/>
+                                    <segue destination="3SE-VC-oXi" kind="show" id="Wdt-QG-xpy"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -107,6 +108,82 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uyL-hA-FHc" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1000.8" y="63.418290854572717"/>
+        </scene>
+        <!--Dream Table View Controller-->
+        <scene sceneID="Zlr-9l-AxQ">
+            <objects>
+                <tableViewController id="3SE-VC-oXi" customClass="DreamTableViewController" customModule="LucidDreams" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="jkw-YD-kGo">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="LucidDreamCell" rowHeight="150" id="XuL-0b-xWd" customClass="LucidTableViewCell" customModule="LucidDreams" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="28" width="375" height="150"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="XuL-0b-xWd" id="h5e-2G-Adl">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="149.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="rB6-lR-6Gq">
+                                            <rect key="frame" x="5" y="5" width="155" height="139.5"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" secondItem="rB6-lR-6Gq" secondAttribute="height" multiplier="155:139" id="cra-Il-GJm"/>
+                                            </constraints>
+                                        </imageView>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="l4H-Yg-Z7Y">
+                                            <rect key="frame" x="200" y="21" width="154" height="108"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="30"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="rB6-lR-6Gq" firstAttribute="leading" secondItem="h5e-2G-Adl" secondAttribute="leading" constant="5" id="1VG-Ku-h97"/>
+                                        <constraint firstItem="rB6-lR-6Gq" firstAttribute="top" secondItem="h5e-2G-Adl" secondAttribute="top" constant="5" id="6e6-xx-bzj"/>
+                                        <constraint firstItem="l4H-Yg-Z7Y" firstAttribute="top" secondItem="h5e-2G-Adl" secondAttribute="topMargin" constant="10" id="BtT-m1-LSJ"/>
+                                        <constraint firstItem="rB6-lR-6Gq" firstAttribute="centerY" secondItem="h5e-2G-Adl" secondAttribute="centerY" id="DJn-aZ-g5t"/>
+                                        <constraint firstAttribute="bottom" secondItem="rB6-lR-6Gq" secondAttribute="bottom" constant="5" id="UGg-Ux-coE"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="l4H-Yg-Z7Y" secondAttribute="bottom" constant="10" id="t7K-Dw-jLF"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="l4H-Yg-Z7Y" secondAttribute="trailing" constant="5" id="xA8-L3-yZB"/>
+                                        <constraint firstItem="l4H-Yg-Z7Y" firstAttribute="leading" secondItem="rB6-lR-6Gq" secondAttribute="trailing" constant="40" id="yTC-98-tAN"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="lucidImageView" destination="rB6-lR-6Gq" id="CR4-x8-isi"/>
+                                    <outlet property="lucidLabel" destination="l4H-Yg-Z7Y" id="tMz-oZ-i3z"/>
+                                </connections>
+                            </tableViewCell>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="InputCell" rowHeight="60" id="jNn-3i-ZFp" customClass="InputTableViewCell" customModule="LucidDreams" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="178" width="375" height="60"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="jNn-3i-ZFp" id="cCj-so-2P7">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="59.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="PZu-OK-Qy5">
+                                            <rect key="frame" x="16" y="6" width="343" height="54"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                            <textInputTraits key="textInputTraits"/>
+                                        </textField>
+                                    </subviews>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="inputTextField" destination="PZu-OK-Qy5" id="Uww-Fg-TaV"/>
+                                </connections>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="3SE-VC-oXi" id="zGc-OM-Yyf"/>
+                            <outlet property="delegate" destination="3SE-VC-oXi" id="rEn-7d-K9M"/>
+                        </connections>
+                    </tableView>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="T0X-H0-94u" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1940" y="62.518740629685162"/>
         </scene>
         <!--Favorite Creature-->
         <scene sceneID="yEw-xd-Bvz">
