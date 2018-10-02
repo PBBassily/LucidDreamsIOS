@@ -54,7 +54,7 @@
                                 <connections>
                                     <outlet property="lucidImageView" destination="dWZ-Zx-CYF" id="17s-tj-lah"/>
                                     <outlet property="lucidLabel" destination="EP0-Fh-kVI" id="TQI-hV-jbg"/>
-                                    <segue destination="7s4-pP-Beq" kind="presentation" id="Pnn-KK-Otd"/>
+                                    <segue destination="7s4-pP-Beq" kind="presentation" identifier="ShowFavTableView" id="Pnn-KK-Otd"/>
                                 </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="LucidDreamCell" id="a1K-2r-oO6" customClass="LucidTableViewCell" customModule="LucidDreams" customModuleProvider="target">
