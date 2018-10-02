@@ -11,7 +11,9 @@ import UIKit
 
 
 class LucidTableViewController: UITableViewController, FavCreatureTableViewDelegate{
-    var favCreatureName = "Creature"
+    
+    //MARK: - datasource init
+    var favCreatureName = LucidCreaturesFactory.getDefaultCreature()
     
     
     
@@ -51,7 +53,9 @@ class LucidTableViewController: UITableViewController, FavCreatureTableViewDeleg
         if indexPath.section == 0 {
             
             cell = tableView.dequeueReusableCell(withIdentifier: "FavCreatureCell", for: indexPath) as! LucidTableViewCell
-            cell.lucidLabel.text = favCreatureName
+            cell.lucidLabel.text = favCreatureName.name
+            cell.lucidImageView.image = UIImage(named: favCreatureName.imageIdentifier!)
+            cell.lucidImageView.sizeToFit()
         }
         else {
             cell = tableView.dequeueReusableCell(withIdentifier: "LucidDreamCell", for: indexPath) as! LucidTableViewCell
@@ -114,7 +118,7 @@ class LucidTableViewController: UITableViewController, FavCreatureTableViewDeleg
     //MARK: - Delegation
     
     func favCreatureDidSelected(with name: String) {
-        favCreatureName = name
+        favCreatureName.name = name
         tableView.reloadData()
     }
     
