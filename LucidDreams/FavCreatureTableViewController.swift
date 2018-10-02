@@ -10,14 +10,15 @@ import UIKit
 
 
 protocol FavCreatureTableViewDelegate : class {
-    func favCreatureDidSelected(with name : String)
+    func updateCreature(_ creature : Creature)
 }
 
 class FavCreatureTableViewController: UITableViewController {
     
     weak var delegate : FavCreatureTableViewDelegate?
     var lastSelectedCell : LucidTableViewCell?
-    var index = 0
+    var chosenCreature : Creature?
+    let allCreatures = LucidCreaturesFactory.getAllCreatures()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,11 +30,6 @@ class FavCreatureTableViewController: UITableViewController {
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -43,7 +39,7 @@ class FavCreatureTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 5
+        return allCreatures.count
     }
 
     
@@ -51,8 +47,17 @@ class FavCreatureTableViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "FavCreature", for: indexPath)
 
         if let lucidCell =  cell as? LucidTableViewCell {
-            lucidCell.lucidLabel.text = "Creature\(index)"
-            index += 1
+            lucidCell.lucidLabel.text = allCreatures[indexPath.row].name
+            let imageIdentifier = allCreatures[indexPath.row].imageIdentifier
+            lucidCell.lucidImageView.contentMode = .scaleAspectFit
+            lucidCell.lucidImageView.image = UIImage(named: imageIdentifier!)
+
+            if chosenCreature == allCreatures[indexPath.row] {
+                lucidCell.accessoryType = .checkmark
+                lastSelectedCell = lucidCell
+            }
+           
+            
         }
 
         return cell
@@ -62,6 +67,8 @@ class FavCreatureTableViewController: UITableViewController {
         lastSelectedCell?.accessoryType = .none
         lastSelectedCell = tableView.cellForRow(at: indexPath) as? LucidTableViewCell
         lastSelectedCell?.accessoryType = .checkmark
+        lastSelectedCell?.setSelected(false, animated: true)
+        chosenCreature = allCreatures[indexPath.row]
     }
     
    
@@ -74,7 +81,7 @@ class FavCreatureTableViewController: UITableViewController {
     
     @IBAction func DoneFunction(_ sender: UIBarButtonItem) {
         
-        delegate?.favCreatureDidSelected(with: (lastSelectedCell?.lucidLabel.text)!)
+       delegate?.updateCreature(chosenCreature!)
         
         close()
     }
