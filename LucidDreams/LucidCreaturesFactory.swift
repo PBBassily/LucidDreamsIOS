@@ -16,7 +16,8 @@ class LucidCreaturesFactory {
         "dragon":"Dragon",
         "unicorn-pink":"Pink Unicorn",
         "unicorn-white":"White Unicorn",
-        "unicorn-yellow":"Yellow Unicorn"
+        "unicorn-yellow":"Yellow Unicorn",
+        "shark":"Shark"
     ]
     
     static func getDefaultCreature() -> Creature {
@@ -30,7 +31,7 @@ class LucidCreaturesFactory {
     }
     
     
-    static func getAllCreature() -> [Creature] {
+    static func getAllCreatures() -> [Creature] {
         
         return nameMapping.map({ (key, _ ) in
             return createCreature(with: key)

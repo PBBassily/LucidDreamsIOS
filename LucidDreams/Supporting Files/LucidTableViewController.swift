@@ -12,8 +12,9 @@ import UIKit
 
 class LucidTableViewController: UITableViewController, FavCreatureTableViewDelegate{
     
+    
     //MARK: - datasource init
-    var favCreatureName = LucidCreaturesFactory.getDefaultCreature()
+    var favCreature = LucidCreaturesFactory.getDefaultCreature()
     
     
     
@@ -53,9 +54,10 @@ class LucidTableViewController: UITableViewController, FavCreatureTableViewDeleg
         if indexPath.section == 0 {
             
             cell = tableView.dequeueReusableCell(withIdentifier: "FavCreatureCell", for: indexPath) as! LucidTableViewCell
-            cell.lucidLabel.text = favCreatureName.name
-            cell.lucidImageView.image = UIImage(named: favCreatureName.imageIdentifier!)
-            cell.lucidImageView.sizeToFit()
+            cell.lucidLabel.text = favCreature.name
+            cell.lucidImageView.contentMode = .scaleAspectFit
+            cell.lucidImageView.image = UIImage(named: favCreature.imageIdentifier!)
+            
         }
         else {
             cell = tableView.dequeueReusableCell(withIdentifier: "LucidDreamCell", for: indexPath) as! LucidTableViewCell
@@ -117,8 +119,8 @@ class LucidTableViewController: UITableViewController, FavCreatureTableViewDeleg
     
     //MARK: - Delegation
     
-    func favCreatureDidSelected(with name: String) {
-        favCreatureName.name = name
+    func updateCreature(_ creature: Creature)  {
+        favCreature = creature
         tableView.reloadData()
     }
     
@@ -131,6 +133,7 @@ class LucidTableViewController: UITableViewController, FavCreatureTableViewDeleg
         if  segue.identifier == "ShowFavTableView" {
             if let navcon = segue.destination as? UINavigationController, let favCreatureTableViewController = navcon.childViewControllers[0] as? FavCreatureTableViewController {
                 favCreatureTableViewController.delegate = self
+                favCreatureTableViewController.chosenCreature = favCreature
             }
         }
      }

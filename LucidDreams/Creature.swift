@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct Creature {
+struct Creature  : Equatable{
     var name : String?
     var imageIdentifier : String?
 }
