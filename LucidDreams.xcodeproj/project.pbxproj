@@ -7,17 +7,21 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3826E2B8216358DF00E98CBE /* LucidTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3826E2B7216358DF00E98CBE /* LucidTableViewController.swift */; };
+		3826E2BA216358F100E98CBE /* LucidTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3826E2B9216358F100E98CBE /* LucidTableViewCell.swift */; };
+		3826E2BC216366C200E98CBE /* FavCreatureTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3826E2BB216366C200E98CBE /* FavCreatureTableViewController.swift */; };
 		38D8D85E21626EA70073962D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38D8D85D21626EA70073962D /* AppDelegate.swift */; };
-		38D8D86021626EA70073962D /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38D8D85F21626EA70073962D /* ViewController.swift */; };
 		38D8D86321626EA70073962D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 38D8D86121626EA70073962D /* Main.storyboard */; };
 		38D8D86521626EA90073962D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 38D8D86421626EA90073962D /* Assets.xcassets */; };
 		38D8D86821626EA90073962D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 38D8D86621626EA90073962D /* LaunchScreen.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3826E2B7216358DF00E98CBE /* LucidTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LucidTableViewController.swift; path = "Supporting Files/LucidTableViewController.swift"; sourceTree = "<group>"; };
+		3826E2B9216358F100E98CBE /* LucidTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LucidTableViewCell.swift; sourceTree = "<group>"; };
+		3826E2BB216366C200E98CBE /* FavCreatureTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavCreatureTableViewController.swift; sourceTree = "<group>"; };
 		38D8D85A21626EA70073962D /* LucidDreams.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LucidDreams.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		38D8D85D21626EA70073962D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		38D8D85F21626EA70073962D /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		38D8D86221626EA70073962D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		38D8D86421626EA90073962D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		38D8D86721626EA90073962D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -55,9 +59,11 @@
 			isa = PBXGroup;
 			children = (
 				38D8D86F21626EE10073962D /* Supporting Files */,
-				38D8D85F21626EA70073962D /* ViewController.swift */,
 				38D8D86121626EA70073962D /* Main.storyboard */,
 				38D8D86921626EA90073962D /* Info.plist */,
+				3826E2B9216358F100E98CBE /* LucidTableViewCell.swift */,
+				3826E2B7216358DF00E98CBE /* LucidTableViewController.swift */,
+				3826E2BB216366C200E98CBE /* FavCreatureTableViewController.swift */,
 			);
 			path = LucidDreams;
 			sourceTree = "<group>";
@@ -143,8 +149,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				38D8D86021626EA70073962D /* ViewController.swift in Sources */,
 				38D8D85E21626EA70073962D /* AppDelegate.swift in Sources */,
+				3826E2BA216358F100E98CBE /* LucidTableViewCell.swift in Sources */,
+				3826E2BC216366C200E98CBE /* FavCreatureTableViewController.swift in Sources */,
+				3826E2B8216358DF00E98CBE /* LucidTableViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
