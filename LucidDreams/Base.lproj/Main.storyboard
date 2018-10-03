@@ -184,7 +184,7 @@
                                         <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="L8e-Ug-zUb">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="149.5"/>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                            <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="yha-0V-e5v">
+                                            <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="0.0" minimumInteritemSpacing="5" id="yha-0V-e5v">
                                                 <size key="itemSize" width="90" height="90"/>
                                                 <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                                 <size key="footerReferenceSize" width="0.0" height="0.0"/>
@@ -192,7 +192,7 @@
                                             </collectionViewFlowLayout>
                                             <cells>
                                                 <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="CreatureCollectionCell" id="qKf-jt-p6K" customClass="CreatureCollectionViewCell" customModule="LucidDreams" customModuleProvider="target">
-                                                    <rect key="frame" x="0.0" y="30" width="90" height="90"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="90" height="90"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
                                                         <rect key="frame" x="0.0" y="0.0" width="90" height="90"/>
@@ -204,10 +204,10 @@
                                                         </subviews>
                                                     </view>
                                                     <constraints>
-                                                        <constraint firstItem="KMH-VA-jvj" firstAttribute="top" secondItem="qKf-jt-p6K" secondAttribute="top" id="2Oc-r6-ORF"/>
-                                                        <constraint firstAttribute="bottom" secondItem="KMH-VA-jvj" secondAttribute="bottom" id="Dnu-Ww-pDo"/>
-                                                        <constraint firstAttribute="trailing" secondItem="KMH-VA-jvj" secondAttribute="trailing" id="cpF-ry-vgj"/>
-                                                        <constraint firstItem="KMH-VA-jvj" firstAttribute="leading" secondItem="qKf-jt-p6K" secondAttribute="leading" id="ioO-99-2Fs"/>
+                                                        <constraint firstItem="KMH-VA-jvj" firstAttribute="leading" secondItem="qKf-jt-p6K" secondAttribute="leading" id="DgL-qu-5EJ"/>
+                                                        <constraint firstItem="KMH-VA-jvj" firstAttribute="top" secondItem="qKf-jt-p6K" secondAttribute="top" id="FUt-Yh-SBo"/>
+                                                        <constraint firstAttribute="trailing" secondItem="KMH-VA-jvj" secondAttribute="trailing" id="Pbf-id-aK1"/>
+                                                        <constraint firstAttribute="bottom" secondItem="KMH-VA-jvj" secondAttribute="bottom" id="gwp-QR-nmS"/>
                                                     </constraints>
                                                     <connections>
                                                         <outlet property="creatureImageView" destination="KMH-VA-jvj" id="MvO-Zb-QfX"/>
