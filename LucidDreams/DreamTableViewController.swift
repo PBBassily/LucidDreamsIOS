@@ -8,17 +8,24 @@
 
 import UIKit
 
-class DreamTableViewController: UITableViewController, UICollectionViewDelegate {
+class DreamTableViewController: UITableViewController, UICollectionViewDelegate,CreaturesCollectionViewDelegate  {
+  
 
     
     
-    
+    var mainDream : Dream?
     var creatureCollectionView: UICollectionView?
+    
+    var dreamPreviewCell : LucidTableViewCell?
+    var dreamDecriptionCell : InputTableViewCell?
+    var dreamCountCell : InputTableViewCell?
+    
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard)))
+//        self.view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard)))
         
       
     }
@@ -55,22 +62,41 @@ class DreamTableViewController: UITableViewController, UICollectionViewDelegate 
             
             cell = tableView.dequeueReusableCell(withIdentifier: "LucidDreamCell", for: indexPath)
             let lucidCell = cell as! LucidTableViewCell
-            lucidCell.lucidLabel.text = "Dream"
+            lucidCell.lucidLabel.text = mainDream?.title
             lucidCell.lucidImageView.contentMode = .scaleAspectFit
-            lucidCell.lucidImageView.image = UIImage(named: "shark")
+            lucidCell.lucidImageView.image = UIImage(named: mainDream?.creature.imageIdentifier ?? "" )
+            
+           // dreamPreviewCell = lucidCell
             
         }
         
-        else if indexPath.section == 1 || indexPath.section == 2  {
+        else if indexPath.section == 1{
            cell = tableView.dequeueReusableCell(withIdentifier: "InputCell", for: indexPath)
-            if indexPath.section == 2 {
-                let inputCell = cell as! InputTableViewCell
+            let inputCell = cell as! InputTableViewCell
+            
+            inputCell.inputTextField.text = "\((mainDream?.title)!)"
+            inputCell.inputTextField.addTarget(self, action: #selector(descriptionTextDidChange), for: UIControlEvents.editingChanged)
+            
+            dreamDecriptionCell = inputCell
+           
+        } else if indexPath.section == 2  {
+            
+            
+            cell = tableView.dequeueReusableCell(withIdentifier: "InputCell", for: indexPath)
+            let inputCell = cell as! InputTableViewCell
+                inputCell.inputTextField.text = "\((mainDream?.number)!)"
                 inputCell.inputTextField.keyboardType = .asciiCapableNumberPad
+            
+                dreamCountCell = inputCell
             }
-        }
+            
        
         else{
            cell = tableView.dequeueReusableCell(withIdentifier: "CollectViewCell", for: indexPath)
+            (cell as! AllCreaturesTableViewCell).configureCell()
+            
+            let collectionViewCell = cell as! AllCreaturesTableViewCell
+            collectionViewCell.delegate = self
         }
         
         return cell
@@ -95,6 +121,23 @@ class DreamTableViewController: UITableViewController, UICollectionViewDelegate 
     @objc func dismissKeyboard() {
         view.endEditing(true)
     }
+    
+    @objc func descriptionTextDidChange( textField: UITextField) {
+        
+        dreamPreviewCell?.lucidLabel.text = textField.text!
+        mainDream?.title=textField.text!
+    }
+    
+    
+    
+    // MARK: - Delegation
+    
+    func creatureIsSelected(_ creature: Creature) {
+        mainDream?.creature = creature
+        //dreamPreviewCell?.imageView?.image = UIImage(named: creature.imageIdentifier!)
+        tableView.reloadData()
+    }
+    
     /*
     // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {

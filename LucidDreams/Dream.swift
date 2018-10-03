@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct Dream {
+class Dream {
     var number : Int
     var creature : Creature
     var title : String

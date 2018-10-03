@@ -91,7 +91,7 @@
                                 <connections>
                                     <outlet property="lucidImageView" destination="zDS-Bf-5Oh" id="u2w-vB-S2I"/>
                                     <outlet property="lucidLabel" destination="OIe-gV-xeK" id="TkH-22-ZIl"/>
-                                    <segue destination="3SE-VC-oXi" kind="show" id="Wdt-QG-xpy"/>
+                                    <segue destination="3SE-VC-oXi" kind="show" identifier="DreamSegueing" id="Wdt-QG-xpy"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -165,7 +165,7 @@
                                             <rect key="frame" x="16" y="6" width="343" height="54"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="25"/>
                                             <textInputTraits key="textInputTraits"/>
                                         </textField>
                                     </subviews>
@@ -184,33 +184,34 @@
                                         <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="L8e-Ug-zUb">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="149.5"/>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                            <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="0.0" minimumInteritemSpacing="5" id="yha-0V-e5v">
+                                            <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="5" minimumInteritemSpacing="5" id="yha-0V-e5v">
                                                 <size key="itemSize" width="90" height="90"/>
                                                 <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                                 <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                                 <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                             </collectionViewFlowLayout>
                                             <cells>
-                                                <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="CreatureCollectionCell" id="qKf-jt-p6K" customClass="CreatureCollectionViewCell" customModule="LucidDreams" customModuleProvider="target">
+                                                <collectionViewCell clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="CreatureCollectionCell" id="qKf-jt-p6K" customClass="CreatureCollectionViewCell" customModule="LucidDreams" customModuleProvider="target">
                                                     <rect key="frame" x="0.0" y="0.0" width="90" height="90"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
                                                         <rect key="frame" x="0.0" y="0.0" width="90" height="90"/>
                                                         <autoresizingMask key="autoresizingMask"/>
                                                         <subviews>
-                                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="KMH-VA-jvj">
-                                                                <rect key="frame" x="0.0" y="0.0" width="90" height="90"/>
+                                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="exk-24-xFv">
+                                                                <rect key="frame" x="0.0" y="0.0" width="90" height="100"/>
                                                             </imageView>
                                                         </subviews>
                                                     </view>
+                                                    <color key="backgroundColor" red="0.0" green="0.98106676339999999" blue="0.57369142770000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <constraints>
-                                                        <constraint firstItem="KMH-VA-jvj" firstAttribute="leading" secondItem="qKf-jt-p6K" secondAttribute="leading" id="DgL-qu-5EJ"/>
-                                                        <constraint firstItem="KMH-VA-jvj" firstAttribute="top" secondItem="qKf-jt-p6K" secondAttribute="top" id="FUt-Yh-SBo"/>
-                                                        <constraint firstAttribute="trailing" secondItem="KMH-VA-jvj" secondAttribute="trailing" id="Pbf-id-aK1"/>
-                                                        <constraint firstAttribute="bottom" secondItem="KMH-VA-jvj" secondAttribute="bottom" id="gwp-QR-nmS"/>
+                                                        <constraint firstItem="exk-24-xFv" firstAttribute="top" secondItem="qKf-jt-p6K" secondAttribute="top" id="Rrn-bW-UST"/>
+                                                        <constraint firstAttribute="trailing" secondItem="exk-24-xFv" secondAttribute="trailing" id="WhT-f4-ref"/>
+                                                        <constraint firstItem="exk-24-xFv" firstAttribute="leading" secondItem="qKf-jt-p6K" secondAttribute="leading" id="qSS-CB-65h"/>
+                                                        <constraint firstAttribute="bottom" secondItem="exk-24-xFv" secondAttribute="bottom" id="rac-zi-FLe"/>
                                                     </constraints>
                                                     <connections>
-                                                        <outlet property="creatureImageView" destination="KMH-VA-jvj" id="MvO-Zb-QfX"/>
+                                                        <outlet property="creatureImageView" destination="exk-24-xFv" id="eNB-ph-l4q"/>
                                                     </connections>
                                                 </collectionViewCell>
                                             </cells>
