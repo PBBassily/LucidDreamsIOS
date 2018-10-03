@@ -11,6 +11,8 @@ import UIKit
 class DreamTableViewController: UITableViewController, UICollectionViewDelegate {
 
     
+    
+    
     var creatureCollectionView: UICollectionView?
     
     override func viewDidLoad() {
