@@ -199,11 +199,10 @@
                                                         <autoresizingMask key="autoresizingMask"/>
                                                         <subviews>
                                                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="exk-24-xFv">
-                                                                <rect key="frame" x="0.0" y="0.0" width="90" height="100"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="90" height="90"/>
                                                             </imageView>
                                                         </subviews>
                                                     </view>
-                                                    <color key="backgroundColor" red="0.0" green="0.98106676339999999" blue="0.57369142770000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <constraints>
                                                         <constraint firstItem="exk-24-xFv" firstAttribute="top" secondItem="qKf-jt-p6K" secondAttribute="top" id="Rrn-bW-UST"/>
                                                         <constraint firstAttribute="trailing" secondItem="exk-24-xFv" secondAttribute="trailing" id="WhT-f4-ref"/>

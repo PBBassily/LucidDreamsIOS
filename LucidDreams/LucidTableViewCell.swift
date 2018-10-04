@@ -28,26 +28,27 @@ class LucidTableViewCell: UITableViewCell {
     func addImages(for name:String, with number:Int){
         
         
-//        let topImage = UIImage(named: "unicorn-white")
-//        let bottomImage = UIImage(named: "unicorn-white")
-//
-//        let size = CGSize(width: topImage!.size.width, height: topImage!.size.height + bottomImage!.size.height)
-//        UIGraphicsBeginImageContextWithOptions(size, false, 0.0)
-//
-//        topImage!.draw(in: CGRect(x: 0, y: 0, width: size.width, height: topImage!.size.height))
-//        bottomImage!.draw(in: CGRect(x: 0, y: topImage!.size.height, width: size.width, height: bottomImage!.size.height)
+        //let size = CGSize(width: lucidImageView.frame.width, height: lucidImageView.frame.height )
+        let image = UIImage(named: name)
+        let resizeConstant = CGFloat(Double(number+1)/2)
+        //let imageNewSize = CGSize(width: (image?.size.width)! * resizeConstant, height: (image?.size.height)! * resizeConstant) // the mgaic formula :D
+        let imageNewSize =  (image?.size)!
+        let imaginaryImageViewHeight = (image?.size.height)! * resizeConstant
+        let imaginaryImageViewWidth = (lucidImageView.frame.width * imaginaryImageViewHeight ) / lucidImageView.frame.height
+        UIGraphicsBeginImageContextWithOptions(CGSize(width: imaginaryImageViewWidth, height: imaginaryImageViewHeight), false, 0.0)
+     
         
         
-        let size = CGSize(width: lucidImageView.frame.width, height: lucidImageView.frame.height )
-        UIGraphicsBeginImageContextWithOptions(size, false, 0.0)
-        
-        var x = CGFloat(0)
+        //var x = number == 1 ? CGFloat(0) : imageNewWidth / CGFloat(2)
+        //var y = number == 1 ? CGFloat(0) : imageNewHeight / CGFloat(2)
+        var x = (imaginaryImageViewWidth - imaginaryImageViewHeight)/CGFloat(2)
         var y = CGFloat(0)
         for _ in 0..<number {
             let image = UIImage(named: name)
-            image!.draw(in: CGRect(x: x, y: y, width: image!.size.width / CGFloat(number) , height: image!.size.height / CGFloat(number)))
-            x  = x + size.width / CGFloat(number)
-            y = y + size.height / CGFloat(number)
+            image!.draw(in: CGRect(x: x, y: y, width: imageNewSize.width , height: imageNewSize.height))
+            x  = x + imaginaryImageViewWidth / CGFloat(2*number)
+            y = y + imaginaryImageViewHeight /  CGFloat(2*number)
+            
         }
 
         
@@ -56,7 +57,7 @@ class LucidTableViewCell: UITableViewCell {
         
         
         lucidImageView.image = newImage
-        lucidImageView.contentMode = . scaleAspectFit
+       lucidImageView.contentMode = .scaleAspectFit
         
     }
     

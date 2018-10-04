@@ -31,6 +31,7 @@ class LucidTableViewController: UITableViewController, FavCreatureTableViewDeleg
     }
     
     override func viewDidAppear(_ animated: Bool) {
+        
         tableView.reloadData()
     }
     
@@ -71,7 +72,7 @@ class LucidTableViewController: UITableViewController, FavCreatureTableViewDeleg
             cell.lucidLabel.text = dream.title
            // cell.lucidImageView.image = UIImage(named: dream.creature.imageIdentifier!)
             cell.addImages(for: dream.creature.imageIdentifier! , with: dream.number)
-            cell.lucidImageView.contentMode = .scaleAspectFit
+          //  cell.lucidImageView.contentMode = .scaleAspectFit
             
             cell.accessoryType  = .disclosureIndicator
         }

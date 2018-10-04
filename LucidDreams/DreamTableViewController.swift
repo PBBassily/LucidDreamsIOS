@@ -87,6 +87,7 @@ class DreamTableViewController: UITableViewController, UICollectionViewDelegate,
                 inputCell.inputTextField.text = "\((mainDream?.number)!)"
                 inputCell.inputTextField.keyboardType = .asciiCapableNumberPad
             
+                inputCell.inputTextField.addTarget(self, action: #selector(countTextDidChange), for: UIControlEvents.editingChanged)
                 dreamCountCell = inputCell
             }
             
@@ -128,6 +129,11 @@ class DreamTableViewController: UITableViewController, UICollectionViewDelegate,
         mainDream?.title=textField.text!
     }
     
+    @objc func countTextDidChange( textField: UITextField) {
+        
+        dreamPreviewCell?.lucidLabel.text = textField.text!
+        mainDream?.number = Int(textField.text!) ?? 1
+    }
     
     
     // MARK: - Delegation
