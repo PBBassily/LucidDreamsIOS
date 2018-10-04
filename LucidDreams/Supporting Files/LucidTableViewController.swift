@@ -15,11 +15,13 @@ class LucidTableViewController: UITableViewController, FavCreatureTableViewDeleg
     
     //MARK: - datasource init
     var favCreature = LucidCreaturesFactory.getDefaultCreature()
-    
+    var dreams = LucidDreamsFactory.getDeafultDreamsBatch()
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        
         
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
@@ -28,6 +30,10 @@ class LucidTableViewController: UITableViewController, FavCreatureTableViewDeleg
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        
+        tableView.reloadData()
+    }
     
     // MARK: - Table view data source
     
@@ -39,7 +45,7 @@ class LucidTableViewController: UITableViewController, FavCreatureTableViewDeleg
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
         case 0 : return 1
-        case 1 : return 3
+        case 1 : return dreams.count
         default : return 0
         }
         
@@ -58,10 +64,16 @@ class LucidTableViewController: UITableViewController, FavCreatureTableViewDeleg
             cell.lucidImageView.contentMode = .scaleAspectFit
             cell.lucidImageView.image = UIImage(named: favCreature.imageIdentifier!)
             
+            
         }
         else {
             cell = tableView.dequeueReusableCell(withIdentifier: "LucidDreamCell", for: indexPath) as! LucidTableViewCell
-            cell.lucidLabel.text = "Dream"
+            let dream = dreams[indexPath.row]
+            cell.lucidLabel.text = dream.title
+           // cell.lucidImageView.image = UIImage(named: dream.creature.imageIdentifier!)
+            cell.addImages(for: dream.creature.imageIdentifier! , with: dream.number)
+          //  cell.lucidImageView.contentMode = .scaleAspectFit
+            
             cell.accessoryType  = .disclosureIndicator
         }
         
@@ -134,6 +146,12 @@ class LucidTableViewController: UITableViewController, FavCreatureTableViewDeleg
             if let navcon = segue.destination as? UINavigationController, let favCreatureTableViewController = navcon.childViewControllers[0] as? FavCreatureTableViewController {
                 favCreatureTableViewController.delegate = self
                 favCreatureTableViewController.chosenCreature = favCreature
+            }
+        }
+        else if segue.identifier == "DreamSegueing", let cell  = sender as? LucidTableViewCell, let indexPath = tableView.indexPath(for: cell) {
+            if let dreamTableViewController  = segue.destination as? DreamTableViewController {
+                
+                dreamTableViewController.mainDream = dreams[indexPath.row]
             }
         }
      }
