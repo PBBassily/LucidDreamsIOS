@@ -8,7 +8,9 @@
 
 import Foundation
 
-class Dream {
+class Dream : NSCopying{
+    
+    
     var number : Int
     var creature : Creature
     var title : String
@@ -19,5 +21,10 @@ class Dream {
         self.creature = creature
         self.title  = title
         
+    }
+    
+    func copy(with zone: NSZone? = nil) -> Any {
+        let dreamCopy = Dream(number: number, creature: creature, title: title+" (copy)")
+        return dreamCopy
     }
 }
