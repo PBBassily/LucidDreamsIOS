@@ -112,9 +112,6 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
-                    <connections>
-                        <outlet property="duplicationButton" destination="CN7-hy-wRb" id="VDE-8A-hdr"/>
-                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uyL-hA-FHc" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

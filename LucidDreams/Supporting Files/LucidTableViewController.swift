@@ -16,10 +16,31 @@ class LucidTableViewController: UITableViewController, FavCreatureTableViewDeleg
     //MARK: - datasource init
     var favCreature = LucidCreaturesFactory.getDefaultCreature()
     var dreams = LucidDreamsFactory.getDeafultDreamsBatch()
+    var leftBarButton : UIBarButtonItem? {
+        get {
+            return navigationItem.leftBarButtonItem
+        }
+        set {
+            navigationItem.leftBarButtonItem = newValue
+        }
+    }
+    var rightBarButton : UIBarButtonItem? {
+        get {
+            return navigationItem.rightBarButtonItem
+        }
+        set {
+            navigationItem.rightBarButtonItem = newValue
+        }
+    }
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        
+        //leftBarButton = navigationItem.leftBarButtonItem
+        //rightBarButton = navigationItem.rightBarButtonItem
+        
      //   tableView.allowsMultipleSelectionDuringEditing = false
         
         
@@ -134,16 +155,16 @@ class LucidTableViewController: UITableViewController, FavCreatureTableViewDeleg
     var isDuplicating = false {
         didSet {
             if self.isDuplicating {
-                duplicationButton.title = "Cancel"
+                leftBarButton?.title = "Cancel"
             } else {
-                duplicationButton.title = "Duplicate"
+                leftBarButton?.title = "Duplicate"
             }
             
            // tableView.setEditing(isDuplicating, animated: true)
         }
     }
     
-    @IBOutlet weak var duplicationButton: UIBarButtonItem!
+    
     
     fileprivate func accessoryTypeDislocureForAllCells() {
         for i in 0 ..< dreams.count {
@@ -191,16 +212,29 @@ class LucidTableViewController: UITableViewController, FavCreatureTableViewDeleg
     }
     
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        return indexPath.section == 1 
+        return indexPath.section == 1
     }
     
     //MARK: - Sharing
+    
+    var isSharing = false {
+        didSet {
+            if isSharing {
+                leftBarButton?.title = "Cancel"
+                rightBarButton = UIBarButtonItem(barButtonSystemItem: .done , target: self, action: #selector(imageShareAction))
+            } else {
+                leftBarButton?.title = "Duplicate"
+                rightBarButton = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(imageShareAction))
+            }
+        }
+    }
     
     override func tableView(_ tableView: UITableView, shouldIndentWhileEditingRowAt indexPath: IndexPath) -> Bool {
         return true
     }
     
     @IBAction func imageShareAction(_ sender: UIBarButtonItem) {
+        isSharing = !isSharing
         
         //tableView.setEditing(true, animated: true)
 //        let image = UIImage(named: dreams[0].creature.imageIdentifier!)
