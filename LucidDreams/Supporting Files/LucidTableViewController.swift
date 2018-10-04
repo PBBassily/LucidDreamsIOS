@@ -20,7 +20,7 @@ class LucidTableViewController: UITableViewController, FavCreatureTableViewDeleg
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+     //   tableView.allowsMultipleSelectionDuringEditing = false
         
         
         // Uncomment the following line to preserve selection between presentations
@@ -70,9 +70,9 @@ class LucidTableViewController: UITableViewController, FavCreatureTableViewDeleg
             cell = tableView.dequeueReusableCell(withIdentifier: "LucidDreamCell", for: indexPath) as! LucidTableViewCell
             let dream = dreams[indexPath.row]
             cell.lucidLabel.text = dream.title
-           // cell.lucidImageView.image = UIImage(named: dream.creature.imageIdentifier!)
+            // cell.lucidImageView.image = UIImage(named: dream.creature.imageIdentifier!)
             cell.addImages(for: dream.creature.imageIdentifier! , with: dream.number)
-          //  cell.lucidImageView.contentMode = .scaleAspectFit
+            //  cell.lucidImageView.contentMode = .scaleAspectFit
             
             cell.accessoryType  = .disclosureIndicator
         }
@@ -138,6 +138,8 @@ class LucidTableViewController: UITableViewController, FavCreatureTableViewDeleg
             } else {
                 duplicationButton.title = "Duplicate"
             }
+            
+           // tableView.setEditing(isDuplicating, animated: true)
         }
     }
     
@@ -145,18 +147,22 @@ class LucidTableViewController: UITableViewController, FavCreatureTableViewDeleg
     
     fileprivate func accessoryTypeDislocureForAllCells() {
         for i in 0 ..< dreams.count {
-            tableView.cellForRow(at: IndexPath(row: i, section: 1))?.accessoryType = .disclosureIndicator
+            tableView.cellForRow(at: IndexPath(row: i, section: 1))?.setEditing(false, animated: true)
         }
     }
     
     fileprivate func accessoryTypeNoneForAllCells() {
         for i in 0 ..< dreams.count {
-            tableView.cellForRow(at: IndexPath(row: i, section: 1))?.accessoryType = .none
+            tableView.cellForRow(at: IndexPath(row: i, section: 1))?.shouldIndentWhileEditing = true
+           tableView.cellForRow(at: IndexPath(row: i, section: 1))?.setEditing(true, animated: true)
+            
+            
         }
     }
     
     @IBAction func DuplicationAction(_ sender: UIBarButtonItem) {
         
+       
         isDuplicating = !isDuplicating
         if isDuplicating{
             accessoryTypeNoneForAllCells()
@@ -184,6 +190,33 @@ class LucidTableViewController: UITableViewController, FavCreatureTableViewDeleg
         isDuplicating = false
     }
     
+    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return indexPath.section == 1 
+    }
+    
+    //MARK: - Sharing
+    
+    override func tableView(_ tableView: UITableView, shouldIndentWhileEditingRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    
+    @IBAction func imageShareAction(_ sender: UIBarButtonItem) {
+        
+        //tableView.setEditing(true, animated: true)
+//        let image = UIImage(named: dreams[0].creature.imageIdentifier!)
+//
+//        // set up activity view controller
+//        let imageToShare = [ image! ]
+//        let activityViewController = UIActivityViewController(activityItems: imageToShare, applicationActivities: nil)
+//        activityViewController.popoverPresentationController?.sourceView = self.view // so that iPads won't crash
+//
+//        // exclude some activity types from the list (optional)
+//        activityViewController.excludedActivityTypes = [ UIActivityType.airDrop, UIActivityType.postToFacebook ]
+//
+//        // present the view controller
+//        self.present(activityViewController, animated: true, completion: nil)
+    }
+    
     //MARK: - Delegation
     
     func updateCreature(_ creature: Creature)  {
@@ -193,14 +226,14 @@ class LucidTableViewController: UITableViewController, FavCreatureTableViewDeleg
     
     
     
-     // MARK: - Navigation
+    // MARK: - Navigation
     
     override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
         return !isDuplicating
     }
-     
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+    
+    // In a storyboard-based application, you will often want to do a little preparation before navigation
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
         if  segue.identifier == "ShowFavTableView" {
             if let navcon = segue.destination as? UINavigationController, let favCreatureTableViewController = navcon.childViewControllers[0] as? FavCreatureTableViewController {
@@ -214,7 +247,7 @@ class LucidTableViewController: UITableViewController, FavCreatureTableViewDeleg
                 dreamTableViewController.mainDream = dreams[indexPath.row]
             }
         }
-     }
+    }
     
     
 }
