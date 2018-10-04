@@ -140,8 +140,8 @@
                                             </constraints>
                                         </imageView>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="l4H-Yg-Z7Y">
-                                            <rect key="frame" x="200" y="21" width="154" height="108"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="30"/>
+                                            <rect key="frame" x="190" y="21" width="164" height="108"/>
+                                            <fontDescription key="fontDescription" type="system" weight="thin" pointSize="23"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
@@ -154,7 +154,7 @@
                                         <constraint firstAttribute="bottom" secondItem="rB6-lR-6Gq" secondAttribute="bottom" constant="5" id="UGg-Ux-coE"/>
                                         <constraint firstAttribute="bottomMargin" secondItem="l4H-Yg-Z7Y" secondAttribute="bottom" constant="10" id="t7K-Dw-jLF"/>
                                         <constraint firstAttribute="trailingMargin" secondItem="l4H-Yg-Z7Y" secondAttribute="trailing" constant="5" id="xA8-L3-yZB"/>
-                                        <constraint firstItem="l4H-Yg-Z7Y" firstAttribute="leading" secondItem="rB6-lR-6Gq" secondAttribute="trailing" constant="40" id="yTC-98-tAN"/>
+                                        <constraint firstItem="l4H-Yg-Z7Y" firstAttribute="leading" secondItem="rB6-lR-6Gq" secondAttribute="trailing" constant="30" id="yTC-98-tAN"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
@@ -173,7 +173,7 @@
                                             <rect key="frame" x="16" y="6" width="343" height="54"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                             <textInputTraits key="textInputTraits"/>
                                         </textField>
                                     </subviews>

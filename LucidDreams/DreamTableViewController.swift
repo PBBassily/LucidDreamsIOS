@@ -66,7 +66,7 @@ class DreamTableViewController: UITableViewController, UICollectionViewDelegate,
             lucidCell.lucidImageView.contentMode = .scaleAspectFit
             lucidCell.lucidImageView.image = UIImage(named: mainDream?.creature.imageIdentifier ?? "" )
             
-           // dreamPreviewCell = lucidCell
+           dreamPreviewCell = lucidCell
             
         }
         
@@ -75,6 +75,7 @@ class DreamTableViewController: UITableViewController, UICollectionViewDelegate,
             let inputCell = cell as! InputTableViewCell
             
             inputCell.inputTextField.text = "\((mainDream?.title)!)"
+            //inputCell.inputTextField.fadeTransition(0.4)
             inputCell.inputTextField.addTarget(self, action: #selector(descriptionTextDidChange), for: UIControlEvents.editingChanged)
             
             dreamDecriptionCell = inputCell
@@ -86,7 +87,6 @@ class DreamTableViewController: UITableViewController, UICollectionViewDelegate,
             let inputCell = cell as! InputTableViewCell
                 inputCell.inputTextField.text = "\((mainDream?.number)!)"
                 inputCell.inputTextField.keyboardType = .asciiCapableNumberPad
-            
                 inputCell.inputTextField.addTarget(self, action: #selector(countTextDidChange), for: UIControlEvents.editingChanged)
                 dreamCountCell = inputCell
             }
@@ -124,6 +124,14 @@ class DreamTableViewController: UITableViewController, UICollectionViewDelegate,
     }
     
     @objc func descriptionTextDidChange( textField: UITextField) {
+        UIView.transition(
+            with : (self.dreamPreviewCell?.lucidLabel)!,
+         duration: 0.5,
+         options: UIViewAnimationOptions.transitionCrossDissolve,
+         animations: {
+            (self.dreamPreviewCell?.lucidLabel)!.text = textField.text
+        },
+         completion: nil)
         
         dreamPreviewCell?.lucidLabel.text = textField.text!
         mainDream?.title=textField.text!
@@ -131,7 +139,6 @@ class DreamTableViewController: UITableViewController, UICollectionViewDelegate,
     
     @objc func countTextDidChange( textField: UITextField) {
         
-        dreamPreviewCell?.lucidLabel.text = textField.text!
         mainDream?.number = Int(textField.text!) ?? 1
     }
     

@@ -36,12 +36,13 @@ class LucidTableViewController: UITableViewController, FavCreatureTableViewDeleg
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        tableView.allowsSelectionDuringEditing = true
         
         
         //leftBarButton = navigationItem.leftBarButtonItem
         //rightBarButton = navigationItem.rightBarButtonItem
         
-     //   tableView.allowsMultipleSelectionDuringEditing = false
+        //   tableView.allowsMultipleSelectionDuringEditing = false
         
         
         // Uncomment the following line to preserve selection between presentations
@@ -160,7 +161,7 @@ class LucidTableViewController: UITableViewController, FavCreatureTableViewDeleg
                 leftBarButton?.title = "Duplicate"
             }
             
-           // tableView.setEditing(isDuplicating, animated: true)
+            
         }
     }
     
@@ -175,7 +176,7 @@ class LucidTableViewController: UITableViewController, FavCreatureTableViewDeleg
     fileprivate func accessoryTypeNoneForAllCells() {
         for i in 0 ..< dreams.count {
             tableView.cellForRow(at: IndexPath(row: i, section: 1))?.shouldIndentWhileEditing = true
-           tableView.cellForRow(at: IndexPath(row: i, section: 1))?.setEditing(true, animated: true)
+            tableView.cellForRow(at: IndexPath(row: i, section: 1))?.setEditing(true, animated: true)
             
             
         }
@@ -183,8 +184,14 @@ class LucidTableViewController: UITableViewController, FavCreatureTableViewDeleg
     
     @IBAction func DuplicationAction(_ sender: UIBarButtonItem) {
         
-       
+        if isSharing {
+            isSharing = false
+            return
+        }
+        
         isDuplicating = !isDuplicating
+        
+        
         if isDuplicating{
             accessoryTypeNoneForAllCells()
         }
@@ -226,6 +233,11 @@ class LucidTableViewController: UITableViewController, FavCreatureTableViewDeleg
                 leftBarButton?.title = "Duplicate"
                 rightBarButton = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(imageShareAction))
             }
+            
+            tableView.allowsMultipleSelectionDuringEditing = true
+            tableView.setEditing(isSharing, animated: true)
+            
+            
         }
     }
     
@@ -234,21 +246,35 @@ class LucidTableViewController: UITableViewController, FavCreatureTableViewDeleg
     }
     
     @IBAction func imageShareAction(_ sender: UIBarButtonItem) {
-        isSharing = !isSharing
         
+        if (!isSharing) {
+            isSharing = true
+            return
+        }
+        
+        
+        if let indepaths = tableView.indexPathsForSelectedRows , indepaths.count > 0   {
+            
+            //let image = UIImage(named: dreams[0].creature.imageIdentifier!)
+            
+            // set up activity view controller
+            let imagesToShare = indepaths.map {
+                (tableView.cellForRow(at: $0) as! LucidTableViewCell).lucidImageView.image
+            }
+            let activityViewController = UIActivityViewController(activityItems: imagesToShare, applicationActivities: nil)
+            activityViewController.popoverPresentationController?.sourceView = self.view // so that iPads won't crash
+            
+            // exclude some activity types from the list (optional)
+            activityViewController.excludedActivityTypes = [ UIActivityType.airDrop, UIActivityType.postToFacebook ]
+            
+            // present the view controller
+            self.present(activityViewController, animated: true, completion: nil)
+            
+        }
+        
+        isSharing = false
         //tableView.setEditing(true, animated: true)
-//        let image = UIImage(named: dreams[0].creature.imageIdentifier!)
-//
-//        // set up activity view controller
-//        let imageToShare = [ image! ]
-//        let activityViewController = UIActivityViewController(activityItems: imageToShare, applicationActivities: nil)
-//        activityViewController.popoverPresentationController?.sourceView = self.view // so that iPads won't crash
-//
-//        // exclude some activity types from the list (optional)
-//        activityViewController.excludedActivityTypes = [ UIActivityType.airDrop, UIActivityType.postToFacebook ]
-//
-//        // present the view controller
-//        self.present(activityViewController, animated: true, completion: nil)
+        //
     }
     
     //MARK: - Delegation
@@ -263,7 +289,7 @@ class LucidTableViewController: UITableViewController, FavCreatureTableViewDeleg
     // MARK: - Navigation
     
     override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
-        return !isDuplicating
+        return !isDuplicating && !isSharing
     }
     
     // In a storyboard-based application, you will often want to do a little preparation before navigation
