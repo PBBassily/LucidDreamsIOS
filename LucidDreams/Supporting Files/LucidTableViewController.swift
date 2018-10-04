@@ -129,6 +129,61 @@ class LucidTableViewController: UITableViewController, FavCreatureTableViewDeleg
      }
      */
     
+    // MARK: - Duplication
+    
+    var isDuplicating = false {
+        didSet {
+            if self.isDuplicating {
+                duplicationButton.title = "Cancel"
+            } else {
+                duplicationButton.title = "Duplicate"
+            }
+        }
+    }
+    
+    @IBOutlet weak var duplicationButton: UIBarButtonItem!
+    
+    fileprivate func accessoryTypeDislocureForAllCells() {
+        for i in 0 ..< dreams.count {
+            tableView.cellForRow(at: IndexPath(row: i, section: 1))?.accessoryType = .disclosureIndicator
+        }
+    }
+    
+    fileprivate func accessoryTypeNoneForAllCells() {
+        for i in 0 ..< dreams.count {
+            tableView.cellForRow(at: IndexPath(row: i, section: 1))?.accessoryType = .none
+        }
+    }
+    
+    @IBAction func DuplicationAction(_ sender: UIBarButtonItem) {
+        
+        isDuplicating = !isDuplicating
+        if isDuplicating{
+            accessoryTypeNoneForAllCells()
+        }
+        else {
+            accessoryTypeDislocureForAllCells()
+        }
+        
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard indexPath.section == 1 && isDuplicating else { return }
+        
+        let dreamCopy = dreams[indexPath.row].copy() as! Dream
+        
+        dreams.append(dreamCopy)
+        
+        tableView.insertRows(at: [IndexPath(row: dreams.count-1, section: 1)], with: UITableViewRowAnimation.automatic )
+        
+        
+        accessoryTypeDislocureForAllCells()
+        
+        tableView.cellForRow(at: indexPath)?.setSelected(false, animated: true)
+        
+        isDuplicating = false
+    }
+    
     //MARK: - Delegation
     
     func updateCreature(_ creature: Creature)  {
@@ -139,9 +194,14 @@ class LucidTableViewController: UITableViewController, FavCreatureTableViewDeleg
     
     
      // MARK: - Navigation
+    
+    override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
+        return !isDuplicating
+    }
      
      // In a storyboard-based application, you will often want to do a little preparation before navigation
      override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
         if  segue.identifier == "ShowFavTableView" {
             if let navcon = segue.destination as? UINavigationController, let favCreatureTableViewController = navcon.childViewControllers[0] as? FavCreatureTableViewController {
                 favCreatureTableViewController.delegate = self
