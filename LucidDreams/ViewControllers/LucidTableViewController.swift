@@ -261,7 +261,7 @@ class LucidTableViewController: UITableViewController, FavCreatureTableViewDeleg
             let imagesToShare = indepaths.map {
                 (tableView.cellForRow(at: $0) as! LucidTableViewCell).lucidImageView.image
             }
-            let activityViewController = UIActivityViewController(activityItems: imagesToShare, applicationActivities: nil)
+            let activityViewController = UIActivityViewController(activityItems: imagesToShare!, applicationActivities: nil)
             activityViewController.popoverPresentationController?.sourceView = self.view // so that iPads won't crash
             
             // exclude some activity types from the list (optional)
