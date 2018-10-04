@@ -16,11 +16,33 @@ class LucidTableViewController: UITableViewController, FavCreatureTableViewDeleg
     //MARK: - datasource init
     var favCreature = LucidCreaturesFactory.getDefaultCreature()
     var dreams = LucidDreamsFactory.getDeafultDreamsBatch()
+    var leftBarButton : UIBarButtonItem? {
+        get {
+            return navigationItem.leftBarButtonItem
+        }
+        set {
+            navigationItem.leftBarButtonItem = newValue
+        }
+    }
+    var rightBarButton : UIBarButtonItem? {
+        get {
+            return navigationItem.rightBarButtonItem
+        }
+        set {
+            navigationItem.rightBarButtonItem = newValue
+        }
+    }
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        tableView.allowsSelectionDuringEditing = true
         
+        
+        //leftBarButton = navigationItem.leftBarButtonItem
+        //rightBarButton = navigationItem.rightBarButtonItem
+        
+        //   tableView.allowsMultipleSelectionDuringEditing = false
         
         
         // Uncomment the following line to preserve selection between presentations
@@ -70,9 +92,9 @@ class LucidTableViewController: UITableViewController, FavCreatureTableViewDeleg
             cell = tableView.dequeueReusableCell(withIdentifier: "LucidDreamCell", for: indexPath) as! LucidTableViewCell
             let dream = dreams[indexPath.row]
             cell.lucidLabel.text = dream.title
-           // cell.lucidImageView.image = UIImage(named: dream.creature.imageIdentifier!)
+            // cell.lucidImageView.image = UIImage(named: dream.creature.imageIdentifier!)
             cell.addImages(for: dream.creature.imageIdentifier! , with: dream.number)
-          //  cell.lucidImageView.contentMode = .scaleAspectFit
+            //  cell.lucidImageView.contentMode = .scaleAspectFit
             
             cell.accessoryType  = .disclosureIndicator
         }
@@ -134,30 +156,42 @@ class LucidTableViewController: UITableViewController, FavCreatureTableViewDeleg
     var isDuplicating = false {
         didSet {
             if self.isDuplicating {
-                duplicationButton.title = "Cancel"
+                leftBarButton?.title = "Cancel"
             } else {
-                duplicationButton.title = "Duplicate"
+                leftBarButton?.title = "Duplicate"
             }
+            
+            
         }
     }
     
-    @IBOutlet weak var duplicationButton: UIBarButtonItem!
+    
     
     fileprivate func accessoryTypeDislocureForAllCells() {
         for i in 0 ..< dreams.count {
-            tableView.cellForRow(at: IndexPath(row: i, section: 1))?.accessoryType = .disclosureIndicator
+            tableView.cellForRow(at: IndexPath(row: i, section: 1))?.setEditing(false, animated: true)
         }
     }
     
     fileprivate func accessoryTypeNoneForAllCells() {
         for i in 0 ..< dreams.count {
-            tableView.cellForRow(at: IndexPath(row: i, section: 1))?.accessoryType = .none
+            tableView.cellForRow(at: IndexPath(row: i, section: 1))?.shouldIndentWhileEditing = true
+            tableView.cellForRow(at: IndexPath(row: i, section: 1))?.setEditing(true, animated: true)
+            
+            
         }
     }
     
     @IBAction func DuplicationAction(_ sender: UIBarButtonItem) {
         
+        if isSharing {
+            isSharing = false
+            return
+        }
+        
         isDuplicating = !isDuplicating
+        
+        
         if isDuplicating{
             accessoryTypeNoneForAllCells()
         }
@@ -184,6 +218,65 @@ class LucidTableViewController: UITableViewController, FavCreatureTableViewDeleg
         isDuplicating = false
     }
     
+    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return indexPath.section == 1
+    }
+    
+    //MARK: - Sharing
+    
+    var isSharing = false {
+        didSet {
+            if isSharing {
+                leftBarButton?.title = "Cancel"
+                rightBarButton = UIBarButtonItem(barButtonSystemItem: .done , target: self, action: #selector(imageShareAction))
+            } else {
+                leftBarButton?.title = "Duplicate"
+                rightBarButton = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(imageShareAction))
+            }
+            
+            tableView.allowsMultipleSelectionDuringEditing = true
+            tableView.setEditing(isSharing, animated: true)
+            
+            
+        }
+    }
+    
+    override func tableView(_ tableView: UITableView, shouldIndentWhileEditingRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    
+    @IBAction func imageShareAction(_ sender: UIBarButtonItem) {
+        
+        if (!isSharing) {
+            isSharing = true
+            return
+        }
+        
+        
+        if let indepaths = tableView.indexPathsForSelectedRows , indepaths.count > 0   {
+            
+            //let image = UIImage(named: dreams[0].creature.imageIdentifier!)
+            
+            // set up activity view controller
+            let imagesToShare = indepaths.map {
+                (tableView.cellForRow(at: $0) as! LucidTableViewCell).lucidImageView.image
+            }
+            let activityViewController = UIActivityViewController(activityItems: imagesToShare, applicationActivities: nil)
+            activityViewController.popoverPresentationController?.sourceView = self.view // so that iPads won't crash
+            
+            // exclude some activity types from the list (optional)
+            activityViewController.excludedActivityTypes = [ UIActivityType.airDrop, UIActivityType.postToFacebook ]
+            
+            // present the view controller
+            self.present(activityViewController, animated: true, completion: nil)
+            
+        }
+        
+        isSharing = false
+        //tableView.setEditing(true, animated: true)
+        //
+    }
+    
     //MARK: - Delegation
     
     func updateCreature(_ creature: Creature)  {
@@ -193,14 +286,14 @@ class LucidTableViewController: UITableViewController, FavCreatureTableViewDeleg
     
     
     
-     // MARK: - Navigation
+    // MARK: - Navigation
     
     override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
-        return !isDuplicating
+        return !isDuplicating && !isSharing
     }
-     
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+    
+    // In a storyboard-based application, you will often want to do a little preparation before navigation
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
         if  segue.identifier == "ShowFavTableView" {
             if let navcon = segue.destination as? UINavigationController, let favCreatureTableViewController = navcon.childViewControllers[0] as? FavCreatureTableViewController {
@@ -214,7 +307,7 @@ class LucidTableViewController: UITableViewController, FavCreatureTableViewDeleg
                 dreamTableViewController.mainDream = dreams[indexPath.row]
             }
         }
-     }
+    }
     
     
 }
