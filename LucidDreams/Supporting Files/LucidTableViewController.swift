@@ -129,6 +129,28 @@ class LucidTableViewController: UITableViewController, FavCreatureTableViewDeleg
      }
      */
     
+    // MARK: - Duplication
+    
+    var isDuplicating = false {
+        didSet {
+            if self.isDuplicating {
+                duplicationButton.title = "Cancel"
+            } else {
+                duplicationButton.title = "Duplicate"
+            }
+        }
+    }
+    
+    @IBOutlet weak var duplicationButton: UIBarButtonItem!
+    
+    @IBAction func DuplicationAction(_ sender: UIBarButtonItem) {
+        
+        isDuplicating = !isDuplicating
+        
+    }
+    
+    
+    
     //MARK: - Delegation
     
     func updateCreature(_ creature: Creature)  {

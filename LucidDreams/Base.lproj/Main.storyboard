@@ -101,9 +101,16 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Lucid Dreams" id="uuG-p3-gUK">
-                        <barButtonItem key="leftBarButtonItem" title="Duplicate" id="CN7-hy-wRb"/>
+                        <barButtonItem key="leftBarButtonItem" title="Duplicate" id="CN7-hy-wRb">
+                            <connections>
+                                <action selector="DuplicationAction:" destination="4Km-kW-3sx" id="ioY-To-hpR"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="action" id="97b-fm-9be"/>
                     </navigationItem>
+                    <connections>
+                        <outlet property="duplicationButton" destination="CN7-hy-wRb" id="VDE-8A-hdr"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uyL-hA-FHc" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -203,6 +210,7 @@
                                                             </imageView>
                                                         </subviews>
                                                     </view>
+                                                    <color key="backgroundColor" red="0.0" green="0.98106676339999999" blue="0.57369142770000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <constraints>
                                                         <constraint firstItem="exk-24-xFv" firstAttribute="top" secondItem="qKf-jt-p6K" secondAttribute="top" id="Rrn-bW-UST"/>
                                                         <constraint firstAttribute="trailing" secondItem="exk-24-xFv" secondAttribute="trailing" id="WhT-f4-ref"/>
