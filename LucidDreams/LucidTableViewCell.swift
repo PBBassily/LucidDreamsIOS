@@ -30,7 +30,7 @@ class LucidTableViewCell: UITableViewCell {
         
         //let size = CGSize(width: lucidImageView.frame.width, height: lucidImageView.frame.height )
         let image = UIImage(named: name)
-        let resizeConstant = CGFloat(Double(number+1)/2)
+        let resizeConstant = CGFloat(Double(number+2)/3)
         //let imageNewSize = CGSize(width: (image?.size.width)! * resizeConstant, height: (image?.size.height)! * resizeConstant) // the mgaic formula :D
         let imageNewSize =  (image?.size)!
         let imaginaryImageViewHeight = (image?.size.height)! * resizeConstant
@@ -47,7 +47,7 @@ class LucidTableViewCell: UITableViewCell {
             let image = UIImage(named: name)
             image!.draw(in: CGRect(x: x, y: y, width: imageNewSize.width , height: imageNewSize.height))
             x  = x + imaginaryImageViewWidth / CGFloat(2*number)
-            y = y + imaginaryImageViewHeight /  CGFloat(2*number)
+            y = y + (image?.size.height)! /  CGFloat(3)
             
         }
 
