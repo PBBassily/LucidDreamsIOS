@@ -12,12 +12,13 @@ class DreamTableViewCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+        
+        
     }
-    
+
     @IBOutlet weak var imageContainer: UIView!
     
     @IBOutlet weak var dreamLabel: UILabel!
     
-   
+    
 }

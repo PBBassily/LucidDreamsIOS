@@ -118,10 +118,7 @@ class DreamTableViewController: UITableViewController, UICollectionViewDelegate,
     
     
     //MARK: - Actions
-    
-    @objc func dismissKeyboard() {
-        view.endEditing(true)
-    }
+
     
     @objc func descriptionTextDidChange( textField: UITextField) {
         UIView.transition(
@@ -135,6 +132,7 @@ class DreamTableViewController: UITableViewController, UICollectionViewDelegate,
         
         dreamPreviewCell?.lucidLabel.text = textField.text!
         mainDream?.title=textField.text!
+        
     }
     
     @objc func countTextDidChange( textField: UITextField) {

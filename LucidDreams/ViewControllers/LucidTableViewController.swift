@@ -91,7 +91,15 @@ class LucidTableViewController: UITableViewController, FavCreatureTableViewDeleg
         else {
             cell = tableView.dequeueReusableCell(withIdentifier: "LucidDreamCell", for: indexPath) as! LucidTableViewCell
             let dream = dreams[indexPath.row]
+            dream.title = dream.title.trimmingCharacters(in: .whitespacesAndNewlines)
+            if  dream.title == "" {
+                dream.title = "Untitled"
+            }
             cell.lucidLabel.text = dream.title
+            
+            if dream.number ==  0 {
+                dream.number = 1
+            }
             // cell.lucidImageView.image = UIImage(named: dream.creature.imageIdentifier!)
             cell.addImages(for: dream.creature.imageIdentifier! , with: dream.number)
             //  cell.lucidImageView.contentMode = .scaleAspectFit
@@ -182,7 +190,7 @@ class LucidTableViewController: UITableViewController, FavCreatureTableViewDeleg
         }
     }
     
-    @IBAction func DuplicationAction(_ sender: UIBarButtonItem) {
+    @IBAction func duplicationAction(_ sender: UIBarButtonItem) {
         
         if isSharing {
             isSharing = false
@@ -261,7 +269,7 @@ class LucidTableViewController: UITableViewController, FavCreatureTableViewDeleg
             let imagesToShare = indepaths.map {
                 (tableView.cellForRow(at: $0) as! LucidTableViewCell).lucidImageView.image
             }
-            let activityViewController = UIActivityViewController(activityItems: imagesToShare!, applicationActivities: nil)
+            let activityViewController = UIActivityViewController(activityItems: imagesToShare , applicationActivities: nil)
             activityViewController.popoverPresentationController?.sourceView = self.view // so that iPads won't crash
             
             // exclude some activity types from the list (optional)
