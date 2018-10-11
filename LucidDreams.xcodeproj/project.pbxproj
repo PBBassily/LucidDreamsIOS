@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		380D7577216FBA830004A0A9 /* ImageFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 380D7576216FBA830004A0A9 /* ImageFactory.swift */; };
 		3826E2B8216358DF00E98CBE /* LucidTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3826E2B7216358DF00E98CBE /* LucidTableViewController.swift */; };
 		3826E2BA216358F100E98CBE /* LucidTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3826E2B9216358F100E98CBE /* LucidTableViewCell.swift */; };
 		3826E2BC216366C200E98CBE /* FavCreatureTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3826E2BB216366C200E98CBE /* FavCreatureTableViewController.swift */; };
@@ -26,6 +27,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		380D7576216FBA830004A0A9 /* ImageFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageFactory.swift; sourceTree = "<group>"; };
 		3826E2B7216358DF00E98CBE /* LucidTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LucidTableViewController.swift; sourceTree = "<group>"; };
 		3826E2B9216358F100E98CBE /* LucidTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LucidTableViewCell.swift; sourceTree = "<group>"; };
 		3826E2BB216366C200E98CBE /* FavCreatureTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavCreatureTableViewController.swift; sourceTree = "<group>"; };
@@ -93,6 +95,7 @@
 			children = (
 				3826E2BF21637CFD00E98CBE /* LucidCreaturesFactory.swift */,
 				38A523A02164E35F0052577F /* LucidDreamsFactory.swift */,
+				380D7576216FBA830004A0A9 /* ImageFactory.swift */,
 			);
 			path = Factories;
 			sourceTree = "<group>";
@@ -216,6 +219,7 @@
 				3826E2C221639E7800E98CBE /* InputTableViewCell.swift in Sources */,
 				38D8D85E21626EA70073962D /* AppDelegate.swift in Sources */,
 				3826E2CC2163AFA800E98CBE /* AllCreaturesTableViewCell.swift in Sources */,
+				380D7577216FBA830004A0A9 /* ImageFactory.swift in Sources */,
 				3826E2BA216358F100E98CBE /* LucidTableViewCell.swift in Sources */,
 				38A523A12164E35F0052577F /* LucidDreamsFactory.swift in Sources */,
 				3826E2BC216366C200E98CBE /* FavCreatureTableViewController.swift in Sources */,

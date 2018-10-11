@@ -100,9 +100,10 @@ class LucidTableViewController: UITableViewController, FavCreatureTableViewDeleg
             if dream.number ==  0 {
                 dream.number = 1
             }
-            // cell.lucidImageView.image = UIImage(named: dream.creature.imageIdentifier!)
-            cell.addImages(for: dream.creature.imageIdentifier! , with: dream.number)
-            //  cell.lucidImageView.contentMode = .scaleAspectFit
+            
+            let labelSize = cell.lucidImageView.frame.size
+            cell.lucidImageView.image = ImageFactory.createImage(from: dream.creature.imageIdentifier!, count: dream.number, of: labelSize)
+            cell.lucidImageView.contentMode = .scaleAspectFit
             
             cell.accessoryType  = .disclosureIndicator
         }
@@ -321,7 +322,6 @@ class LucidTableViewController: UITableViewController, FavCreatureTableViewDeleg
             
         } else {
             if let viewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "DreamsViewConroller") as? DreamTableViewController {
-                
                 if let navigator = navigationController {
                     viewController.mainDream = dreams[indexPath.row]
                     navigator.pushViewController(viewController, animated: true)
