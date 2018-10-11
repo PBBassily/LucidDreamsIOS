@@ -81,7 +81,7 @@ class LucidTableViewController: UITableViewController, FavCreatureTableViewDeleg
         let cell : LucidTableViewCell
         if indexPath.section == 0 {
             
-            cell = tableView.dequeueReusableCell(withIdentifier: "FavCreatureCell", for: indexPath) as! LucidTableViewCell
+            cell = tableView.dequeueReusableCell(withIdentifier: "LucidDreamCell", for: indexPath) as! LucidTableViewCell
             cell.lucidLabel.text = favCreature.name
             cell.lucidImageView.contentMode = .scaleAspectFit
             cell.lucidImageView.image = UIImage(named: favCreature.imageIdentifier!)
@@ -209,21 +209,34 @@ class LucidTableViewController: UITableViewController, FavCreatureTableViewDeleg
         
     }
     
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard indexPath.section == 1 && isDuplicating else { return }
+    private func copyDreamAndAppend(at indexPath: IndexPath) {
         
         let dreamCopy = dreams[indexPath.row].copy() as! Dream
-        
         dreams.append(dreamCopy)
+    }
+    
+    private func copySelected(_ indexPath: IndexPath, _ tableView: UITableView) {
         
+        copyDreamAndAppend(at: indexPath)
+        
+        // update table after selection
         tableView.insertRows(at: [IndexPath(row: dreams.count-1, section: 1)], with: UITableViewRowAnimation.automatic )
-        
-        
+        tableView.cellForRow(at: indexPath)?.setSelected(false, animated: true)
         accessoryTypeDislocureForAllCells()
         
-        tableView.cellForRow(at: indexPath)?.setSelected(false, animated: true)
-        
         isDuplicating = false
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        let isSelectedForNavigation = shouldNavigate()
+        
+        if isSelectedForNavigation {
+            navigateFromCell(at: indexPath)
+        } else if isDuplicating {
+            copySelected(indexPath, tableView)
+        }
+        // else is sharing
     }
     
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
@@ -281,8 +294,6 @@ class LucidTableViewController: UITableViewController, FavCreatureTableViewDeleg
         }
         
         isSharing = false
-        //tableView.setEditing(true, animated: true)
-        //
     }
     
     //MARK: - Delegation
@@ -296,26 +307,30 @@ class LucidTableViewController: UITableViewController, FavCreatureTableViewDeleg
     
     // MARK: - Navigation
     
-    override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
+    
+    
+    func navigateFromCell(at indexPath: IndexPath) {
+        if indexPath.section == 0 {
+            if let navcon = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "FavCreatureViewControllerNavigator") as? UINavigationController ,
+                let viewController =  navcon.childViewControllers[0] as? FavCreatureTableViewController {
+                viewController.delegate = self
+                viewController.chosenCreature = favCreature
+                self.present(navcon, animated: true, completion: nil)
+                
+            }
+            
+        } else {
+            if let viewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "DreamsViewConroller") as? DreamTableViewController {
+                
+                if let navigator = navigationController {
+                    viewController.mainDream = dreams[indexPath.row]
+                    navigator.pushViewController(viewController, animated: true)
+                }
+            }
+        }
+    }
+    
+    func shouldNavigate() -> Bool {
         return !isDuplicating && !isSharing
     }
-    
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
-        if  segue.identifier == "ShowFavTableView" {
-            if let navcon = segue.destination as? UINavigationController, let favCreatureTableViewController = navcon.childViewControllers[0] as? FavCreatureTableViewController {
-                favCreatureTableViewController.delegate = self
-                favCreatureTableViewController.chosenCreature = favCreature
-            }
-        }
-        else if segue.identifier == "DreamSegueing", let cell  = sender as? LucidTableViewCell, let indexPath = tableView.indexPath(for: cell) {
-            if let dreamTableViewController  = segue.destination as? DreamTableViewController {
-                
-                dreamTableViewController.mainDream = dreams[indexPath.row]
-            }
-        }
-    }
-    
-    
 }

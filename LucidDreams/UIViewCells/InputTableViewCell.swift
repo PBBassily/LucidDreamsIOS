@@ -29,7 +29,6 @@ class InputTableViewCell: UITableViewCell, UITextFieldDelegate {
         let doneBtn: UIBarButtonItem = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(doneButtonAction))
         toolbar.setItems([flexSpace, doneBtn], animated: false)
         toolbar.sizeToFit()
-        //setting toolbar as inputAccessoryView
         self.inputTextField.inputAccessoryView = toolbar
     }
     
