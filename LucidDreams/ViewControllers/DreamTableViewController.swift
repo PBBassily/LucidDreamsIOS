@@ -8,10 +8,8 @@
 
 import UIKit
 
-class DreamTableViewController: UITableViewController, UICollectionViewDelegate,CreaturesCollectionViewDelegate  {
-  
-
-    
+class DreamTableViewController: UITableViewController, SelectedCreaturePreviewDelegate{
+   
     
     var mainDream : Dream?
     var creatureCollectionView: UICollectionView?
@@ -20,14 +18,12 @@ class DreamTableViewController: UITableViewController, UICollectionViewDelegate,
     var dreamDecriptionCell : InputTableViewCell?
     var dreamCountCell : InputTableViewCell?
     
+    var creaturesCollectionViewContoller = CreaturesCollectionVCDelegate()
+    
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-//        self.view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard)))
-        
-      
     }
 
     
@@ -94,10 +90,10 @@ class DreamTableViewController: UITableViewController, UICollectionViewDelegate,
        
         else{
            cell = tableView.dequeueReusableCell(withIdentifier: "CollectViewCell", for: indexPath)
-            (cell as! AllCreaturesTableViewCell).configureCell()
-            
             let collectionViewCell = cell as! AllCreaturesTableViewCell
-            collectionViewCell.delegate = self
+           creaturesCollectionViewContoller.delegate = self
+            creaturesCollectionViewContoller.creaturesCollectionView = collectionViewCell.creaturesCollectionView
+            
         }
         
         return cell
@@ -143,7 +139,7 @@ class DreamTableViewController: UITableViewController, UICollectionViewDelegate,
     
     // MARK: - Delegation
     
-    func creatureIsSelected(_ creature: Creature) {
+    func creatureIsSelected(_ creature : Creature) {
         mainDream?.creature = creature
         //dreamPreviewCell?.imageView?.image = UIImage(named: creature.imageIdentifier!)
         tableView.reloadData()
