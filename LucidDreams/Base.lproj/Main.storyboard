@@ -65,12 +65,12 @@
                     <navigationItem key="navigationItem" title="Lucid Dreams" id="uuG-p3-gUK">
                         <barButtonItem key="leftBarButtonItem" title="Duplicate" id="CN7-hy-wRb">
                             <connections>
-                                <action selector="duplicationAction:" destination="4Km-kW-3sx" id="ioY-To-hpR"/>
+                                <action selector="leftButtonAction:" destination="4Km-kW-3sx" id="ioY-To-hpR"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="action" id="97b-fm-9be">
                             <connections>
-                                <action selector="imageShareAction:" destination="4Km-kW-3sx" id="ooJ-XA-cgv"/>
+                                <action selector="rightButtonAction:" destination="4Km-kW-3sx" id="ooJ-XA-cgv"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
