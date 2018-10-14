@@ -13,12 +13,16 @@ class CreatureCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var creatureImageView: UIImageView!
     
+    override func awakeFromNib() {
+        creatureImageView.layer.borderColor = UIColor.blue.cgColor
+    }
+    
     override var isSelected: Bool {
         didSet {
             if self.isSelected {
                 
                 creatureImageView.layer.borderWidth = 5
-                creatureImageView.layer.borderColor = UIColor.blue.cgColor
+                
             }
             else {
                 creatureImageView.layer.borderWidth = 0
