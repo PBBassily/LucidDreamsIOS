@@ -14,6 +14,7 @@ class CreatureCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var creatureImageView: UIImageView!
     
     override func awakeFromNib() {
+        creatureImageView.contentMode = .scaleAspectFit
         creatureImageView.layer.borderColor = UIColor.blue.cgColor
     }
     

@@ -10,8 +10,8 @@ import UIKit
 
 
 
-class LucidTableViewController: UITableViewController, FavCreatureTableViewDelegate{
-    
+class LucidTableViewController: UITableViewController, SelectedCreaturePreviewDelegate{
+   
     
     //MARK: -  Init
     var favCreature = LucidCreaturesFactory.getDefaultCreature()
@@ -289,7 +289,7 @@ class LucidTableViewController: UITableViewController, FavCreatureTableViewDeleg
     
     //MARK: - CollectionView Delegation
     
-    func updateCreature(_ creature: Creature)  {
+    func creatureIsSelected(_ creature: Creature) {
         favCreature = creature
         tableView.reloadData()
     }

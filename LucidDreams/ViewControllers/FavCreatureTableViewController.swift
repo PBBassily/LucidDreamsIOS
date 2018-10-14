@@ -9,13 +9,10 @@
 import UIKit
 
 
-protocol FavCreatureTableViewDelegate : class {
-    func updateCreature(_ creature : Creature)
-}
 
 class FavCreatureTableViewController: UITableViewController {
     
-    weak var delegate : FavCreatureTableViewDelegate?
+    weak var delegate : SelectedCreaturePreviewDelegate?
     var selectedCell : LucidTableViewCell?
     var chosenCreature : Creature?
     let allCreatures = LucidCreaturesFactory.getAllCreatures()
@@ -45,9 +42,10 @@ class FavCreatureTableViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "FavCreature", for: indexPath)
         if let lucidCell =  cell as? LucidTableViewCell {
             lucidCell.lucidLabel.text = allCreatures[indexPath.row].name
+            
             let imageIdentifier = allCreatures[indexPath.row].imageIdentifier
-            lucidCell.lucidImageView.contentMode = .scaleAspectFit
-            lucidCell.lucidImageView.image = UIImage(named: imageIdentifier!)
+            let labelSize = lucidCell.lucidImageView.frame.size
+            lucidCell.lucidImageView.image = ImageFactory.createImage(from: imageIdentifier!, count: 1, of: labelSize)
             
             if chosenCreature == allCreatures[indexPath.row] {
                 lucidCell.accessoryType = .checkmark
@@ -69,17 +67,11 @@ class FavCreatureTableViewController: UITableViewController {
         chosenCreature = allCreatures[indexPath.row]
     }
     
-   
-    func close() {
-        self.presentingViewController?.dismiss(animated: true)
-    }
-    
-    
     // MARK: - Actions
     
     @IBAction func DoneFunction(_ sender: UIBarButtonItem) {
         
-       delegate?.updateCreature(chosenCreature!)
+       delegate?.creatureIsSelected(chosenCreature!)
         
         close()
     }
@@ -89,8 +81,9 @@ class FavCreatureTableViewController: UITableViewController {
         
         close()
     }
-  
-
     
+    func close() {
+        self.presentingViewController?.dismiss(animated: true)
+    }
 
 }

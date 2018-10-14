@@ -12,32 +12,17 @@ class DreamTableViewController: UITableViewController, SelectedCreaturePreviewDe
    
     
     var mainDream : Dream?
-    var creatureCollectionView: UICollectionView?
     
     var dreamPreviewCell : LucidTableViewCell?
-    var dreamDecriptionCell : InputTableViewCell?
-    var dreamCountCell : InputTableViewCell?
     
-    var creaturesCollectionViewContoller = CreaturesCollectionVCDelegate()
+    var creaturesCVDelegate = CreaturesCollectionVCDelegate()
     
     
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-    }
-
-    
-
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
+       
         return 4
-    }
-
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
-        return 1
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
@@ -50,6 +35,12 @@ class DreamTableViewController: UITableViewController, SelectedCreaturePreviewDe
         }
     }
 
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        
+        return 1
+    }
+    
+   
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         // Configure the cell...
@@ -59,7 +50,6 @@ class DreamTableViewController: UITableViewController, SelectedCreaturePreviewDe
             cell = tableView.dequeueReusableCell(withIdentifier: "LucidDreamCell", for: indexPath)
             let lucidCell = cell as! LucidTableViewCell
             lucidCell.lucidLabel.text = mainDream?.title
-            lucidCell.lucidImageView.contentMode = .scaleAspectFit
             lucidCell.lucidImageView.image = UIImage(named: mainDream?.creature.imageIdentifier ?? "" )
             
            dreamPreviewCell = lucidCell
@@ -74,7 +64,7 @@ class DreamTableViewController: UITableViewController, SelectedCreaturePreviewDe
             //inputCell.inputTextField.fadeTransition(0.4)
             inputCell.inputTextField.addTarget(self, action: #selector(descriptionTextDidChange), for: UIControlEvents.editingChanged)
             
-            dreamDecriptionCell = inputCell
+           // dreamDecriptionCell = inputCell
            
         } else if indexPath.section == 2  {
             
@@ -84,15 +74,15 @@ class DreamTableViewController: UITableViewController, SelectedCreaturePreviewDe
                 inputCell.inputTextField.text = "\((mainDream?.number)!)"
                 inputCell.inputTextField.keyboardType = .asciiCapableNumberPad
                 inputCell.inputTextField.addTarget(self, action: #selector(countTextDidChange), for: UIControlEvents.editingChanged)
-                dreamCountCell = inputCell
+              //  dreamCountCell = inputCell
             }
             
        
         else{
            cell = tableView.dequeueReusableCell(withIdentifier: "CollectViewCell", for: indexPath)
             let collectionViewCell = cell as! AllCreaturesTableViewCell
-           creaturesCollectionViewContoller.delegate = self
-            creaturesCollectionViewContoller.creaturesCollectionView = collectionViewCell.creaturesCollectionView
+           creaturesCVDelegate.delegate = self
+            creaturesCVDelegate.creaturesCollectionView = collectionViewCell.creaturesCollectionView
             
         }
         
@@ -109,11 +99,10 @@ class DreamTableViewController: UITableViewController, SelectedCreaturePreviewDe
         }
     }
     
-    //MARK: - CollectionView
     
     
     
-    //MARK: - Actions
+    //MARK: - Input textfields listeners
 
     
     @objc func descriptionTextDidChange( textField: UITextField) {
@@ -141,7 +130,6 @@ class DreamTableViewController: UITableViewController, SelectedCreaturePreviewDe
     
     func creatureIsSelected(_ creature : Creature) {
         mainDream?.creature = creature
-        //dreamPreviewCell?.imageView?.image = UIImage(named: creature.imageIdentifier!)
         tableView.reloadData()
     }
     

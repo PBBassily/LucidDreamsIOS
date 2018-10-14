@@ -11,10 +11,6 @@ import UIKit
 private let reuseIdentifier = "CreatureCollectionCell"
 
 
-protocol SelectedCreaturePreviewDelegate: class {
-    
-    func  creatureIsSelected(_ creature : Creature)
-}
 class CreaturesCollectionVCDelegate: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
     
     var allCreatures = LucidCreaturesFactory.getAllCreatures()

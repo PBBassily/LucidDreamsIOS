@@ -20,6 +20,7 @@
 		38A5239F2164E2130052577F /* Dream.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38A5239E2164E2130052577F /* Dream.swift */; };
 		38A523A12164E35F0052577F /* LucidDreamsFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38A523A02164E35F0052577F /* LucidDreamsFactory.swift */; };
 		38BFD33B2173390600F123F1 /* CreaturesCollectionVCDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38BFD33A2173390600F123F1 /* CreaturesCollectionVCDelegate.swift */; };
+		38BFD33D2173693900F123F1 /* SelectedCreaturePreviewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38BFD33C2173693900F123F1 /* SelectedCreaturePreviewDelegate.swift */; };
 		38D8D85E21626EA70073962D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38D8D85D21626EA70073962D /* AppDelegate.swift */; };
 		38D8D86321626EA70073962D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 38D8D86121626EA70073962D /* Main.storyboard */; };
 		38D8D86521626EA90073962D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 38D8D86421626EA90073962D /* Assets.xcassets */; };
@@ -40,6 +41,7 @@
 		38A5239E2164E2130052577F /* Dream.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dream.swift; sourceTree = "<group>"; };
 		38A523A02164E35F0052577F /* LucidDreamsFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LucidDreamsFactory.swift; sourceTree = "<group>"; };
 		38BFD33A2173390600F123F1 /* CreaturesCollectionVCDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreaturesCollectionVCDelegate.swift; sourceTree = "<group>"; };
+		38BFD33C2173693900F123F1 /* SelectedCreaturePreviewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectedCreaturePreviewDelegate.swift; sourceTree = "<group>"; };
 		38D8D85A21626EA70073962D /* LucidDreams.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LucidDreams.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		38D8D85D21626EA70073962D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		38D8D86221626EA70073962D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -77,6 +79,7 @@
 				3826E2BB216366C200E98CBE /* FavCreatureTableViewController.swift */,
 				3826E2C52163A02600E98CBE /* DreamTableViewController.swift */,
 				38BFD33A2173390600F123F1 /* CreaturesCollectionVCDelegate.swift */,
+				38BFD33C2173693900F123F1 /* SelectedCreaturePreviewDelegate.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -215,6 +218,7 @@
 				38A5239F2164E2130052577F /* Dream.swift in Sources */,
 				3826E2C021637CFD00E98CBE /* LucidCreaturesFactory.swift in Sources */,
 				3826E2C62163A02600E98CBE /* DreamTableViewController.swift in Sources */,
+				38BFD33D2173693900F123F1 /* SelectedCreaturePreviewDelegate.swift in Sources */,
 				3826E2C221639E7800E98CBE /* InputTableViewCell.swift in Sources */,
 				38BFD33B2173390600F123F1 /* CreaturesCollectionVCDelegate.swift in Sources */,
 				38D8D85E21626EA70073962D /* AppDelegate.swift in Sources */,
