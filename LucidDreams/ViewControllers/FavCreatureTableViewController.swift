@@ -12,6 +12,8 @@ import UIKit
 
 class FavCreatureTableViewController: UITableViewController {
     
+    // MARK: - Init
+    
     weak var delegate : SelectedCreaturePreviewDelegate?
     var selectedCell : LucidTableViewCell?
     var chosenCreature : Creature?

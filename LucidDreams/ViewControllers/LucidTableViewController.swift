@@ -282,11 +282,12 @@ class LucidTableViewController: UITableViewController, SelectedCreaturePreviewDe
     
     private func createShareActivityController(_ imagesToShare: [UIImage]) -> UIActivityViewController {
         
+    
         let activityViewController = UIActivityViewController(activityItems: imagesToShare  , applicationActivities: nil)
-        activityViewController.popoverPresentationController?.sourceView = self.view // so that iPads won't crash
-        
-        // exclude some activity types from the list (optional)
-        activityViewController.excludedActivityTypes = [ UIActivityType.airDrop, UIActivityType.postToFacebook ]
+        activityViewController.modalPresentationStyle = .popover
+        //activityViewController.popoverPresentationController?.barButtonItem = rightBarButton
+        activityViewController.popoverPresentationController?.sourceView = self.view
+        activityViewController.popoverPresentationController?.sourceRect = CGRect(x: view.center.x, y: view.center.y, width: 0, height: 0)
         
         return activityViewController
     }
