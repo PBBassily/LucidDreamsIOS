@@ -31,7 +31,8 @@ class CreaturesCollectionVCDelegate: UIViewController, UICollectionViewDelegate,
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! CreatureCollectionViewCell
-        cell.creatureImageView.image = UIImage(named: allCreatures[indexPath.row].imageIdentifier!)
+        let image = UIImage(named: allCreatures[indexPath.row].imageIdentifier!)
+        cell.configure(image: image!)
         return cell
     }
     

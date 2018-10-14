@@ -10,8 +10,9 @@ import UIKit
 
 class InputTableViewCell: UITableViewCell, UITextFieldDelegate {
     
-    @IBOutlet weak var inputTextField: UITextField!
-
+    
+    @IBOutlet internal weak var inputTextField: UITextField!
+    
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -36,10 +37,10 @@ class InputTableViewCell: UITableViewCell, UITextFieldDelegate {
     
     
     @objc private func doneEditingButtonAction() {
-    
+        
         inputTextField.resignFirstResponder()
     }
-
+    
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         inputTextField.resignFirstResponder()
@@ -48,10 +49,7 @@ class InputTableViewCell: UITableViewCell, UITextFieldDelegate {
     
     
     
-
-  
     
     
-
     
 }

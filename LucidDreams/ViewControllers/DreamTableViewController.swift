@@ -81,8 +81,9 @@ class DreamTableViewController: UITableViewController, SelectedCreaturePreviewDe
         let cell = tableView.dequeueReusableCell(withIdentifier: "LucidDreamCell", for: indexPath)
         
         if let lucidCell = cell as? LucidTableViewCell {
-            lucidCell.lucidLabel.text = mainDream?.title
-            lucidCell.lucidImageView.image = UIImage(named: mainDream?.creature.imageIdentifier ?? "" )
+            let title = mainDream?.title
+            let image = UIImage(named: mainDream?.creature.imageIdentifier ?? "" )
+            lucidCell.configure(title: title!, image: image!)
             dreamPreviewCell = lucidCell
             
         }
@@ -119,22 +120,22 @@ class DreamTableViewController: UITableViewController, SelectedCreaturePreviewDe
     //MARK: - Input textfields listeners
     
     
-    private func animateChange(text: String ) {
-        UIView.transition(
-            with : (self.dreamPreviewCell?.lucidLabel)!,
-            duration: 0.5,
-            options: UIViewAnimationOptions.transitionCrossDissolve,
-            animations: {
-                (self.dreamPreviewCell?.lucidLabel)!.text = text
-        },
-            completion: nil)
-    }
+//    private func animateChange(text: String ) {
+//        UIView.transition(
+//            with : (self.dreamPreviewCell?.lucidLabel)!,
+//            duration: 0.5,
+//            options: UIViewAnimationOptions.transitionCrossDissolve,
+//            animations: {
+//                (self.dreamPreviewCell?.lucidLabel)!.text = text
+//        },
+//            completion: nil)
+//    }
     
     @objc func descriptionTextDidChange( textField: UITextField) {
         
         mainDream?.title=textField.text!
         
-        animateChange(text: textField.text!)
+        dreamPreviewCell?.animateChange(text: textField.text!)
         
         
     }

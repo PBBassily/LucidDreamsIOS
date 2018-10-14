@@ -14,10 +14,10 @@ class FavCreatureTableViewController: UITableViewController {
     
     // MARK: - Init
     
-    weak var delegate : SelectedCreaturePreviewDelegate?
-    var selectedCell : LucidTableViewCell?
-    var chosenCreature : Creature?
-    let allCreatures = LucidCreaturesFactory.getAllCreatures()
+    public weak var delegate : SelectedCreaturePreviewDelegate?
+    private var selectedCell : LucidTableViewCell?
+    internal var chosenCreature : Creature?
+    private  let allCreatures = LucidCreaturesFactory.getAllCreatures()
     
     
 
@@ -48,12 +48,12 @@ class FavCreatureTableViewController: UITableViewController {
     
     private func prepareCellForCreature(_ indexPath : IndexPath) -> UITableViewCell?{
         let cell = tableView.dequeueReusableCell(withIdentifier: "FavCreature", for: indexPath)
-        if let lucidCell =  cell as? LucidTableViewCell {
-            lucidCell.lucidLabel.text = allCreatures[indexPath.row].name
+        if let lucidCell =  cell as? LucidTableViewCell, let imageId = allCreatures[indexPath.row].imageIdentifier{
+            let title = allCreatures[indexPath.row].name
+            let labelSize = lucidCell.getImageViewSize()
+            let image = ImageFactory.createImage(from: imageId, count: 1, of: labelSize)
             
-            let imageIdentifier = allCreatures[indexPath.row].imageIdentifier
-            let labelSize = lucidCell.lucidImageView.frame.size
-            lucidCell.lucidImageView.image = ImageFactory.createImage(from: imageIdentifier!, count: 1, of: labelSize)
+            lucidCell.configure(title: title!, image: image)
             
             if chosenCreature == allCreatures[indexPath.row] {
                 lucidCell.accessoryType = .checkmark

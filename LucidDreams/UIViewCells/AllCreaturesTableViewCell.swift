@@ -12,6 +12,6 @@ import UIKit
 
 class AllCreaturesTableViewCell: UITableViewCell {
     
-    @IBOutlet weak var creaturesCollectionView: UICollectionView!
+    @IBOutlet public weak var creaturesCollectionView: UICollectionView!
     
 }

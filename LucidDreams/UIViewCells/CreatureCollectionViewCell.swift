@@ -11,7 +11,11 @@ import UIKit
 class CreatureCollectionViewCell: UICollectionViewCell {
     
     
-    @IBOutlet weak var creatureImageView: UIImageView!
+    @IBOutlet private weak var creatureImageView: UIImageView!
+    
+    public func configure (image : UIImage){
+        creatureImageView.image = image
+    }
     
     override func awakeFromNib() {
         creatureImageView.contentMode = .scaleAspectFit
