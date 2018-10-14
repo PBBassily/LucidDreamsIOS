@@ -67,6 +67,12 @@ class LucidTableViewController: UITableViewController, SelectedCreaturePreviewDe
         return cell
     }
     
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return Constants.lucidDreamCellHeight
+    }
+    
+    // MARK: - TableView Cells preparation
+    
     private func prepareCellForMainCreature( _ indexPath: IndexPath) -> UITableViewCell? {
         
         if let cell = tableView.dequeueReusableCell(withIdentifier: "LucidDreamCell", for: indexPath) as? LucidTableViewCell {
@@ -97,8 +103,6 @@ class LucidTableViewController: UITableViewController, SelectedCreaturePreviewDe
             
             let labelSize = cell.lucidImageView.frame.size
             cell.lucidImageView.image = ImageFactory.createImage(from: dream.creature.imageIdentifier!, count: dream.number, of: labelSize)
-            cell.lucidImageView.contentMode = .scaleAspectFit
-            
             cell.accessoryType  = .disclosureIndicator
             return cell
         }

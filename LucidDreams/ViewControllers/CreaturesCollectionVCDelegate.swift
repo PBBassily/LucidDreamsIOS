@@ -11,39 +11,36 @@ import UIKit
 private let reuseIdentifier = "CreatureCollectionCell"
 
 
-class CreaturesCollectionVCDelegate: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
+class CreaturesCollectionVCDelegate: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     var allCreatures = LucidCreaturesFactory.getAllCreatures()
     weak var delegate : SelectedCreaturePreviewDelegate?
-
+    
     var creaturesCollectionView: UICollectionView? {
         didSet{
-            creaturesCollectionView?.allowsSelection = true
             creaturesCollectionView?.dataSource = self
             creaturesCollectionView?.delegate = self
         }
     }
     
     // MARK: UICollectionViewDataSource
-
-
-
- func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of items
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return allCreatures.count
     }
-
+    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! CreatureCollectionViewCell
-        
-        cell.creatureImageView.contentMode = .scaleAspectFit
         cell.creatureImageView.image = UIImage(named: allCreatures[indexPath.row].imageIdentifier!)
         return cell
     }
-
-     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         delegate?.creatureIsSelected(allCreatures[indexPath.row])
     }
-
-
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return Constants.creatureCollectionViewCellSize
+    }
+    
 }

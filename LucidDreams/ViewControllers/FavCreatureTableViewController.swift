@@ -38,6 +38,12 @@ class FavCreatureTableViewController: UITableViewController {
         return prepareCellForCreature(indexPath) ?? UITableViewCell()
     }
     
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return Constants.lucidDreamCellHeight
+    }
+    
+     // MARK: - TableView Cells preparation
+    
     private func prepareCellForCreature(_ indexPath : IndexPath) -> UITableViewCell?{
         let cell = tableView.dequeueReusableCell(withIdentifier: "FavCreature", for: indexPath)
         if let lucidCell =  cell as? LucidTableViewCell {

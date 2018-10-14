@@ -19,11 +19,14 @@ class ImageFactory {
         let imageNewSize =  (image?.size)!
         let imaginaryImageViewHeight = (image?.size.height)! * resizeConstant
         let imaginaryImageViewWidth = (size.width * imaginaryImageViewHeight ) / size.height
+        
+        
         UIGraphicsBeginImageContextWithOptions(CGSize(width: imaginaryImageViewWidth, height: imaginaryImageViewHeight), false, 0.0)
         
         
         var x = (imaginaryImageViewWidth - imaginaryImageViewHeight)/CGFloat(2)
         var y = CGFloat(0)
+        
         for _ in 0..<number {
             let image = UIImage(named: imageIdentifer)
             image!.draw(in: CGRect(x: x, y: y, width: imageNewSize.width , height: imageNewSize.height))
@@ -32,8 +35,8 @@ class ImageFactory {
             
         }
         
-        
         let newImage:UIImage = UIGraphicsGetImageFromCurrentImageContext()!
+        
         UIGraphicsEndImageContext()
         
         return newImage

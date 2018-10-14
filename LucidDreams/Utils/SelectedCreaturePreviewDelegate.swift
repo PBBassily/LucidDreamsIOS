@@ -7,7 +7,15 @@
 //
 
 import Foundation
+
 protocol SelectedCreaturePreviewDelegate: class {
     
+/**
+   
+     Makes it easier for view controllers to know whicj creature is chosen in subviews to be previewed
+     delegate must implement this function and customise the action following the selection
+     
+     
+ */
     func  creatureIsSelected(_ creature : Creature)
 }
