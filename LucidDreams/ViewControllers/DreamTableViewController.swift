@@ -8,46 +8,22 @@
 
 import UIKit
 
-class DreamTableViewController: UITableViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout{
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return allCreatures.count
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CreatureCollectionCell", for: indexPath) as! CreatureCollectionViewCell
-        
-        cell.creatureImageView.contentMode = .scaleAspectFit
-        cell.creatureImageView.image = UIImage(named: allCreatures[indexPath.row].imageIdentifier!)
-        
-        
-        return cell
-    }
-    
-   func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        creatureIsSelected(allCreatures[indexPath.row])
-    }
-    
+class DreamTableViewController: UITableViewController, SelectedCreaturePreviewDelegate{
+   
     
     var mainDream : Dream?
     var creatureCollectionView: UICollectionView?
-    var allCreatures = LucidCreaturesFactory.getAllCreatures()
+    
     var dreamPreviewCell : LucidTableViewCell?
     var dreamDecriptionCell : InputTableViewCell?
     var dreamCountCell : InputTableViewCell?
-    var creaturesCollectionView: UICollectionView? {
-        didSet{
-            creaturesCollectionView?.allowsSelection = true
-            creaturesCollectionView?.dataSource = self
-            creaturesCollectionView?.delegate = self
-        }
-    }
+    
+    var creaturesCollectionViewContoller = CreaturesCollectionVCDelegate()
+    
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        
-      
     }
 
     
@@ -115,8 +91,9 @@ class DreamTableViewController: UITableViewController, UICollectionViewDelegate,
         else{
            cell = tableView.dequeueReusableCell(withIdentifier: "CollectViewCell", for: indexPath)
             let collectionViewCell = cell as! AllCreaturesTableViewCell
-           // collectionViewCell.delegate = self
-            creaturesCollectionView = collectionViewCell.creaturesCollectionView
+           creaturesCollectionViewContoller.delegate = self
+            creaturesCollectionViewContoller.creaturesCollectionView = collectionViewCell.creaturesCollectionView
+            
         }
         
         return cell
@@ -162,7 +139,7 @@ class DreamTableViewController: UITableViewController, UICollectionViewDelegate,
     
     // MARK: - Delegation
     
-    func creatureIsSelected(_ creature: Creature) {
+    func creatureIsSelected(_ creature : Creature) {
         mainDream?.creature = creature
         //dreamPreviewCell?.imageView?.image = UIImage(named: creature.imageIdentifier!)
         tableView.reloadData()
