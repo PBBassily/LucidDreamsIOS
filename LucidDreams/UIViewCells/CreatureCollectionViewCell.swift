@@ -11,14 +11,24 @@ import UIKit
 class CreatureCollectionViewCell: UICollectionViewCell {
     
     
-    @IBOutlet weak var creatureImageView: UIImageView!
+    @IBOutlet private weak var creatureImageView: UIImageView!
+    
+    public func configure (image : UIImage?){
+        creatureImageView.image = image
+    }
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        creatureImageView.contentMode = .scaleAspectFit
+        creatureImageView.layer.borderColor = UIColor.blue.cgColor
+    }
     
     override var isSelected: Bool {
         didSet {
             if self.isSelected {
                 
                 creatureImageView.layer.borderWidth = 5
-                creatureImageView.layer.borderColor = UIColor.blue.cgColor
+                
             }
             else {
                 creatureImageView.layer.borderWidth = 0

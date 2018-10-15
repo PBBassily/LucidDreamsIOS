@@ -8,40 +8,30 @@
 
 import UIKit
 
-class DreamTableViewController: UITableViewController, UICollectionViewDelegate,CreaturesCollectionViewDelegate  {
-  
-
+class DreamTableViewController: UITableViewController, SelectedCreaturePreviewDelegate{
     
     
-    var mainDream : Dream?
-    var creatureCollectionView: UICollectionView?
+    private var mainDream : Dream?
     
-    var dreamPreviewCell : LucidTableViewCell?
-    var dreamDecriptionCell : InputTableViewCell?
-    var dreamCountCell : InputTableViewCell?
+    private var dreamPreviewCell : LucidTableViewCell?
     
+    private var creaturesCVDelegate = CreaturesCollectionVC()
     
+    private  static let  dreamTableViewCellsHeight   = [150.0, 60.0, 60.0, 200.0].map({CGFloat($0 * Constants.resizeFactor)})
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-//        self.view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard)))
+     // MARK: - Config
+    
+    public func config(mainDream : Dream?){
         
-      
+        self.mainDream = mainDream
+        
     }
-
     
-
     // MARK: - Table view data source
-
+    
     override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 4
-    }
-
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        return 1
+        return 4
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
@@ -53,101 +43,119 @@ class DreamTableViewController: UITableViewController, UICollectionViewDelegate,
         default : return ""
         }
     }
-
+    
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        
+        return 1
+    }
+    
+    
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        // Configure the cell...
-        let cell : UITableViewCell
-        if indexPath.section == 0 {
-            
-            cell = tableView.dequeueReusableCell(withIdentifier: "LucidDreamCell", for: indexPath)
-            let lucidCell = cell as! LucidTableViewCell
-            lucidCell.lucidLabel.text = mainDream?.title
-            lucidCell.lucidImageView.contentMode = .scaleAspectFit
-            lucidCell.lucidImageView.image = UIImage(named: mainDream?.creature.imageIdentifier ?? "" )
-            
-           dreamPreviewCell = lucidCell
-            
+        
+        if mainDream == nil {
+            return UITableViewCell()
         }
         
-        else if indexPath.section == 1{
-           cell = tableView.dequeueReusableCell(withIdentifier: "InputCell", for: indexPath)
-            let inputCell = cell as! InputTableViewCell
+        let cell : UITableViewCell
+        
+        if indexPath.section == 0 {
             
-            inputCell.inputTextField.text = "\((mainDream?.title)!)"
-            //inputCell.inputTextField.fadeTransition(0.4)
-            inputCell.inputTextField.addTarget(self, action: #selector(descriptionTextDidChange), for: UIControlEvents.editingChanged)
+            cell = prepareDreamPreviewCell(at : indexPath)
             
-            dreamDecriptionCell = inputCell
-           
+        } else if indexPath.section == 1 {
+            
+            cell = prepareCellForInput(at : indexPath, content: mainDream!.title, numbersOnly : false, selector: #selector(descriptionTextDidChange))
+            
         } else if indexPath.section == 2  {
             
+            cell = prepareCellForInput(at: indexPath, content: "\(mainDream!.number)", numbersOnly: true, selector:  #selector(countTextDidChange))
             
-            cell = tableView.dequeueReusableCell(withIdentifier: "InputCell", for: indexPath)
-            let inputCell = cell as! InputTableViewCell
-                inputCell.inputTextField.text = "\((mainDream?.number)!)"
-                inputCell.inputTextField.keyboardType = .asciiCapableNumberPad
-                inputCell.inputTextField.addTarget(self, action: #selector(countTextDidChange), for: UIControlEvents.editingChanged)
-                dreamCountCell = inputCell
-            }
+        } else {
+            cell = prepareCellForAllCreatures(at: indexPath)
             
-       
-        else{
-           cell = tableView.dequeueReusableCell(withIdentifier: "CollectViewCell", for: indexPath)
-            (cell as! AllCreaturesTableViewCell).configureCell()
-            
-            let collectionViewCell = cell as! AllCreaturesTableViewCell
-            collectionViewCell.delegate = self
         }
         
         return cell
     }
- 
+    
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         switch indexPath.section {
-        case 0 : return CGFloat(150)
-        case 1,2 : return CGFloat(60)
-        case 3 : return CGFloat(190)
+        case 0..<4 : return DreamTableViewController.dreamTableViewCellsHeight[indexPath.section]
         default : return CGFloat(0)
         }
     }
     
-    //MARK: - CollectionView
+    //MARK: - Cells preparation
+    
+    private func prepareDreamPreviewCell(at indexPath: IndexPath) -> UITableViewCell {
+        
+        let cell = tableView.dequeueReusableCell(withIdentifier: "LucidDreamCell", for: indexPath)
+        
+        if let lucidCell = cell as? LucidTableViewCell {
+            let title = mainDream?.title
+            let image = UIImage(named: mainDream?.creature?.imageIdentifier ?? "" )
+            lucidCell.configure(title: title, image: image)
+            dreamPreviewCell = lucidCell
+            
+        }
+        return cell
+    }
+    
+    private func prepareCellForInput(at indexPath: IndexPath,content : String?, numbersOnly : Bool, selector: Selector) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "InputCell", for: indexPath)
+        
+        if let inputCell = cell as? InputTableViewCell {
+            
+            inputCell.configure(text: content)
+            
+            inputCell.addEditingChangedListener(target: self,selector: selector)
+            
+            if numbersOnly {
+                inputCell.setNumberPadOnly()
+            }
+            
+        }
+        return cell
+    }
+    
+    private func prepareCellForAllCreatures(at indexPath: IndexPath) -> UITableViewCell{
+        
+        let cell = tableView.dequeueReusableCell(withIdentifier: "CollectViewCell", for: indexPath)
+        if let collectionViewCell = cell as? AllCreaturesTableViewCell{
+            creaturesCVDelegate.configure(creaturesCollectionView: collectionViewCell.creaturesCollectionView, delegate: self)
+           
+        }
+        return cell
+    }
     
     
+    //MARK: - Input textfields listeners
     
-    //MARK: - Actions
-
     
     @objc func descriptionTextDidChange( textField: UITextField) {
-        UIView.transition(
-            with : (self.dreamPreviewCell?.lucidLabel)!,
-         duration: 0.5,
-         options: UIViewAnimationOptions.transitionCrossDissolve,
-         animations: {
-            (self.dreamPreviewCell?.lucidLabel)!.text = textField.text
-        },
-         completion: nil)
+        if let text = textField.text {
+            mainDream?.title = text
+            dreamPreviewCell?.animateChange(text: text)
+        }
+      
         
-        dreamPreviewCell?.lucidLabel.text = textField.text!
-        mainDream?.title=textField.text!
         
     }
     
     @objc func countTextDidChange( textField: UITextField) {
         
-        mainDream?.number = Int(textField.text!) ?? 1
+        mainDream?.number = Int(textField.text ?? "") ?? 1
     }
     
     
     // MARK: - Delegation
     
-    func creatureIsSelected(_ creature: Creature) {
+    func creatureIsSelected(_ creature : Creature) {
         mainDream?.creature = creature
-        //dreamPreviewCell?.imageView?.image = UIImage(named: creature.imageIdentifier!)
         tableView.reloadData()
     }
     
-
+    
 }

@@ -16,52 +16,15 @@
             <objects>
                 <tableViewController id="4Km-kW-3sx" customClass="LucidTableViewController" customModule="LucidDreams" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="90" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="VIb-Dn-E0s">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="FavCreatureCell" id="QgL-nI-CyF" customClass="LucidTableViewCell" customModule="LucidDreams" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="55.5" width="600" height="90"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="QgL-nI-CyF" id="Tqp-8u-10d">
-                                    <rect key="frame" x="0.0" y="0.0" width="600" height="89.5"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="dWZ-Zx-CYF">
-                                            <rect key="frame" x="5" y="5" width="121.5" height="79.5"/>
-                                            <constraints>
-                                                <constraint firstAttribute="width" secondItem="dWZ-Zx-CYF" secondAttribute="height" multiplier="123:80" id="o9a-sE-NiL"/>
-                                            </constraints>
-                                        </imageView>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EP0-Fh-kVI">
-                                            <rect key="frame" x="134.5" y="21" width="42" height="48"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                            <nil key="textColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                    </subviews>
-                                    <constraints>
-                                        <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="EP0-Fh-kVI" secondAttribute="trailing" constant="10" id="4tW-jl-npj"/>
-                                        <constraint firstAttribute="bottomMargin" secondItem="EP0-Fh-kVI" secondAttribute="bottom" constant="10" id="9Za-gP-07j"/>
-                                        <constraint firstItem="dWZ-Zx-CYF" firstAttribute="top" secondItem="Tqp-8u-10d" secondAttribute="top" constant="5" id="Bu1-1p-5Dy"/>
-                                        <constraint firstItem="dWZ-Zx-CYF" firstAttribute="leading" secondItem="Tqp-8u-10d" secondAttribute="leading" constant="5" id="KxV-hL-t2y"/>
-                                        <constraint firstItem="EP0-Fh-kVI" firstAttribute="top" secondItem="Tqp-8u-10d" secondAttribute="topMargin" constant="10" id="c21-U9-c05"/>
-                                        <constraint firstItem="EP0-Fh-kVI" firstAttribute="leading" secondItem="dWZ-Zx-CYF" secondAttribute="trailing" constant="8" symbolic="YES" id="rOR-Ez-2RV"/>
-                                        <constraint firstAttribute="bottom" secondItem="dWZ-Zx-CYF" secondAttribute="bottom" constant="5" id="vl8-Ec-1kf"/>
-                                        <constraint firstItem="dWZ-Zx-CYF" firstAttribute="centerY" secondItem="Tqp-8u-10d" secondAttribute="centerY" id="xPM-Kg-M2V"/>
-                                    </constraints>
-                                </tableViewCellContentView>
-                                <connections>
-                                    <outlet property="lucidImageView" destination="dWZ-Zx-CYF" id="17s-tj-lah"/>
-                                    <outlet property="lucidLabel" destination="EP0-Fh-kVI" id="TQI-hV-jbg"/>
-                                    <segue destination="7s4-pP-Beq" kind="presentation" identifier="ShowFavTableView" id="Pnn-KK-Otd"/>
-                                </connections>
-                            </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="blue" indentationWidth="10" reuseIdentifier="LucidDreamCell" focusStyle="custom" id="a1K-2r-oO6" customClass="LucidTableViewCell" customModule="LucidDreams" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="145.5" width="600" height="90"/>
+                                <rect key="frame" x="0.0" y="55.5" width="375" height="90"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="a1K-2r-oO6" id="wxj-DZ-UXr">
-                                    <rect key="frame" x="0.0" y="0.0" width="600" height="89.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="89.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="zDS-Bf-5Oh">
@@ -91,7 +54,6 @@
                                 <connections>
                                     <outlet property="lucidImageView" destination="zDS-Bf-5Oh" id="u2w-vB-S2I"/>
                                     <outlet property="lucidLabel" destination="OIe-gV-xeK" id="TkH-22-ZIl"/>
-                                    <segue destination="3SE-VC-oXi" kind="show" identifier="DreamSegueing" id="Wdt-QG-xpy"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -103,12 +65,12 @@
                     <navigationItem key="navigationItem" title="Lucid Dreams" id="uuG-p3-gUK">
                         <barButtonItem key="leftBarButtonItem" title="Duplicate" id="CN7-hy-wRb">
                             <connections>
-                                <action selector="duplicationAction:" destination="4Km-kW-3sx" id="ioY-To-hpR"/>
+                                <action selector="leftButtonAction:" destination="4Km-kW-3sx" id="ioY-To-hpR"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="action" id="97b-fm-9be">
                             <connections>
-                                <action selector="imageShareAction:" destination="4Km-kW-3sx" id="ooJ-XA-cgv"/>
+                                <action selector="rightButtonAction:" destination="4Km-kW-3sx" id="ooJ-XA-cgv"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -120,17 +82,17 @@
         <!--Dream Table View Controller-->
         <scene sceneID="Zlr-9l-AxQ">
             <objects>
-                <tableViewController id="3SE-VC-oXi" customClass="DreamTableViewController" customModule="LucidDreams" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="DreamsViewConroller" id="3SE-VC-oXi" customClass="DreamTableViewController" customModule="LucidDreams" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="jkw-YD-kGo">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="LucidDreamCell" rowHeight="150" id="XuL-0b-xWd" customClass="LucidTableViewCell" customModule="LucidDreams" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="28" width="600" height="150"/>
+                                <rect key="frame" x="0.0" y="28" width="375" height="150"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="XuL-0b-xWd" id="h5e-2G-Adl">
-                                    <rect key="frame" x="0.0" y="0.0" width="600" height="149.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="149.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="rB6-lR-6Gq">
@@ -140,7 +102,7 @@
                                             </constraints>
                                         </imageView>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="l4H-Yg-Z7Y">
-                                            <rect key="frame" x="190" y="21" width="385" height="108"/>
+                                            <rect key="frame" x="190" y="21" width="164" height="108"/>
                                             <fontDescription key="fontDescription" type="system" weight="thin" pointSize="23"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
@@ -163,10 +125,10 @@
                                 </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="InputCell" rowHeight="60" id="jNn-3i-ZFp" customClass="InputTableViewCell" customModule="LucidDreams" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="178" width="600" height="60"/>
+                                <rect key="frame" x="0.0" y="178" width="375" height="60"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="jNn-3i-ZFp" id="cCj-so-2P7">
-                                    <rect key="frame" x="0.0" y="0.0" width="600" height="59.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="59.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="PZu-OK-Qy5">
@@ -183,14 +145,14 @@
                                 </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="CollectViewCell" rowHeight="150" id="XBY-XV-93E" customClass="AllCreaturesTableViewCell" customModule="LucidDreams" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="238" width="600" height="150"/>
+                                <rect key="frame" x="0.0" y="238" width="375" height="150"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="XBY-XV-93E" id="NpD-pr-JU5">
-                                    <rect key="frame" x="0.0" y="0.0" width="600" height="149.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="149.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="L8e-Ug-zUb">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="149.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="149.5"/>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="5" minimumInteritemSpacing="5" id="yha-0V-e5v">
                                                 <size key="itemSize" width="90" height="90"/>
@@ -252,15 +214,15 @@
             <objects>
                 <tableViewController id="hpG-qS-L7q" customClass="FavCreatureTableViewController" customModule="LucidDreams" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="90" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="nGi-L3-Ots">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="FavCreature" id="VyH-rJ-nDC" customClass="LucidTableViewCell" customModule="LucidDreams" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="28" width="600" height="90"/>
+                                <rect key="frame" x="0.0" y="28" width="375" height="90"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="VyH-rJ-nDC" id="3Bh-0l-xHH">
-                                    <rect key="frame" x="0.0" y="0.0" width="600" height="89.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="89.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="T2N-3M-7bn">
@@ -318,10 +280,10 @@
         <!--Navigation Controller-->
         <scene sceneID="RgM-Wv-GzO">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="XD4-jN-yai" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="MainNavigationController" automaticallyAdjustsScrollViewInsets="NO" id="XD4-jN-yai" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="rwG-zn-pqX">
-                        <rect key="frame" x="0.0" y="20" width="600" height="44"/>
+                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
@@ -336,10 +298,10 @@
         <!--Navigation Controller-->
         <scene sceneID="nlF-oL-sdh">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="7s4-pP-Beq" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="FavCreatureViewControllerNavigator" automaticallyAdjustsScrollViewInsets="NO" id="7s4-pP-Beq" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="1dm-RX-VAn">
-                        <rect key="frame" x="0.0" y="20" width="600" height="44"/>
+                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>

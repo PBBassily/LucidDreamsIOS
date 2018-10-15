@@ -10,59 +10,40 @@ import UIKit
 
 
 
-class LucidTableViewController: UITableViewController, FavCreatureTableViewDelegate{
+class LucidTableViewController: UITableViewController, SelectedCreaturePreviewDelegate{
     
     
-    //MARK: - datasource init
-    var favCreature = LucidCreaturesFactory.getDefaultCreature()
-    var dreams = LucidDreamsFactory.getDeafultDreamsBatch()
-    var leftBarButton : UIBarButtonItem? {
-        get {
-            return navigationItem.leftBarButtonItem
-        }
-        set {
-            navigationItem.leftBarButtonItem = newValue
-        }
-    }
-    var rightBarButton : UIBarButtonItem? {
-        get {
-            return navigationItem.rightBarButtonItem
-        }
-        set {
-            navigationItem.rightBarButtonItem = newValue
-        }
-    }
+    //MARK: -  Init
+    private var favCreature = LucidCreaturesFactory.getDefaultCreature()
+    private var dreams = LucidDreamsFactory.getDeafultDreamsBatch()
+    private static let lucidDreamCellHeight =  CGFloat(90.0 * Constants.resizeFactor)
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.allowsSelectionDuringEditing = true
-        
-        
-        //leftBarButton = navigationItem.leftBarButtonItem
-        //rightBarButton = navigationItem.rightBarButtonItem
-        
-        //   tableView.allowsMultipleSelectionDuringEditing = false
-        
-        
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-        
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        
+        super.viewDidAppear(animated)
         tableView.reloadData()
     }
     
-    // MARK: - Table view data source
+    // MARK: - TableView DataSource
     
     override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
         return 2
     }
+    
+    
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        switch section {
+        case 0 : return "FAVORITE CREATURE"
+        case 1 : return "DREAMS"
+        default : return nil
+        }
+    }
+    
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
@@ -74,172 +55,201 @@ class LucidTableViewController: UITableViewController, FavCreatureTableViewDeleg
     }
     
     
-    
-    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        // Configure the cell...
-        let cell : LucidTableViewCell
+        let cell: UITableViewCell
         if indexPath.section == 0 {
-            
-            cell = tableView.dequeueReusableCell(withIdentifier: "FavCreatureCell", for: indexPath) as! LucidTableViewCell
-            cell.lucidLabel.text = favCreature.name
-            cell.lucidImageView.contentMode = .scaleAspectFit
-            cell.lucidImageView.image = UIImage(named: favCreature.imageIdentifier!)
-            
-            
+            cell = prepareCellForMainCreature(indexPath) ?? UITableViewCell()
+        } else {
+            cell = prepareCellForDreams( indexPath) ?? UITableViewCell()
         }
-        else {
-            cell = tableView.dequeueReusableCell(withIdentifier: "LucidDreamCell", for: indexPath) as! LucidTableViewCell
-            let dream = dreams[indexPath.row]
-            dream.title = dream.title.trimmingCharacters(in: .whitespacesAndNewlines)
-            if  dream.title == "" {
-                dream.title = "Untitled"
-            }
-            cell.lucidLabel.text = dream.title
-            
-            if dream.number ==  0 {
-                dream.number = 1
-            }
-            // cell.lucidImageView.image = UIImage(named: dream.creature.imageIdentifier!)
-            cell.addImages(for: dream.creature.imageIdentifier! , with: dream.number)
-            //  cell.lucidImageView.contentMode = .scaleAspectFit
-            
-            cell.accessoryType  = .disclosureIndicator
-        }
-        
-        
         
         return cell
     }
     
-    
-    
-    
-    
-    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        switch section {
-        case 0 : return "FAVORITE CREATURE"
-        case 1 : return "DREAMS"
-        default : return nil
-        }
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return LucidTableViewController.lucidDreamCellHeight
     }
     
-    /*
-     // Override to support conditional editing of the table view.
-     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-     // Return false if you do not want the specified item to be editable.
-     return true
-     }
-     */
+    // MARK: - TableView Cells preparation
     
-    /*
-     // Override to support editing the table view.
-     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-     if editingStyle == .delete {
-     // Delete the row from the data source
-     tableView.deleteRows(at: [indexPath], with: .fade)
-     } else if editingStyle == .insert {
-     // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-     }
-     }
-     */
-    
-    /*
-     // Override to support rearranging the table view.
-     override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-     
-     }
-     */
-    
-    /*
-     // Override to support conditional rearranging of the table view.
-     override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-     // Return false if you do not want the item to be re-orderable.
-     return true
-     }
-     */
-    
-    // MARK: - Duplication
-    
-    var isDuplicating = false {
-        didSet {
-            if self.isDuplicating {
-                leftBarButton?.title = "Cancel"
-            } else {
-                leftBarButton?.title = "Duplicate"
-            }
+    private func prepareCellForMainCreature( _ indexPath: IndexPath) -> UITableViewCell? {
+        
+        if let cell = tableView.dequeueReusableCell(withIdentifier: "LucidDreamCell", for: indexPath) as? LucidTableViewCell,
+            let imageId = favCreature.imageIdentifier , let name = favCreature.name {
             
+            let labelSize = cell.getImageViewSize()
+            let creatureImage = ImageFactory.createImage(from: imageId, count:   1, of: labelSize)
             
-        }
-    }
-    
-    
-    
-    fileprivate func accessoryTypeDislocureForAllCells() {
-        for i in 0 ..< dreams.count {
-            tableView.cellForRow(at: IndexPath(row: i, section: 1))?.setEditing(false, animated: true)
-        }
-    }
-    
-    fileprivate func accessoryTypeNoneForAllCells() {
-        for i in 0 ..< dreams.count {
-            tableView.cellForRow(at: IndexPath(row: i, section: 1))?.shouldIndentWhileEditing = true
-            tableView.cellForRow(at: IndexPath(row: i, section: 1))?.setEditing(true, animated: true)
+            cell.configure(title: name, image: creatureImage)
             
-            
+            return cell
         }
+        return nil
     }
     
-    @IBAction func duplicationAction(_ sender: UIBarButtonItem) {
-        
-        if isSharing {
-            isSharing = false
-            return
+    
+    private func prepareCellForDreams(_ indexPath: IndexPath) -> UITableViewCell? {
+        if let cell = tableView.dequeueReusableCell(withIdentifier: "LucidDreamCell", for: indexPath) as? LucidTableViewCell {
+            
+            let dream = dreams[indexPath.row]
+            let title = dream.title.trimmingCharacters(in: .whitespacesAndNewlines)
+            dream.title = title == "" ? "Untitled" : title
+            dream.number = dream.number < 1 ? 1 : dream.number
+            let labelSize = cell.getImageViewSize()
+            let image = ImageFactory.createImage(from: dream.creature?.imageIdentifier, count: dream.number, of: labelSize)
+            cell.configure(title: dream.title, image: image)
+            cell.accessoryType  = .disclosureIndicator
+            return cell
         }
-        
-        isDuplicating = !isDuplicating
-        
-        
-        if isDuplicating{
-            accessoryTypeNoneForAllCells()
-        }
-        else {
-            accessoryTypeDislocureForAllCells()
-        }
-        
+        return nil
     }
+    
+    
+    // MARK: - TableView Actions & Editions
+    
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard indexPath.section == 1 && isDuplicating else { return }
+        let isSelectedForNavigation = shouldNavigate()
         
-        let dreamCopy = dreams[indexPath.row].copy() as! Dream
-        
-        dreams.append(dreamCopy)
-        
-        tableView.insertRows(at: [IndexPath(row: dreams.count-1, section: 1)], with: UITableViewRowAnimation.automatic )
-        
-        
-        accessoryTypeDislocureForAllCells()
-        
-        tableView.cellForRow(at: indexPath)?.setSelected(false, animated: true)
-        
-        isDuplicating = false
+        if isSelectedForNavigation {
+            navigateFromCell(at: indexPath)
+        } else if isDuplicating {
+            copySelected(indexPath, tableView)
+        }
     }
     
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         return indexPath.section == 1
     }
     
+    override func tableView(_ tableView: UITableView, shouldIndentWhileEditingRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    
+    
+    
+    // MARK: - Duplication & Sharing Intersection
+    
+    
+    private var leftBarButton : UIBarButtonItem? {
+        get {
+            return navigationItem.leftBarButtonItem
+        }
+        set {
+            navigationItem.leftBarButtonItem = newValue
+        }
+    }
+    
+    private var rightBarButton : UIBarButtonItem? {
+        get {
+            return navigationItem.rightBarButtonItem
+        }
+        set {
+            navigationItem.rightBarButtonItem = newValue
+        }
+    }
+    
+    @IBAction func leftButtonAction(_ sender: UIBarButtonItem) {
+        
+        
+        // if sharing process, so left button action is to cancel sharing
+        if isSharing {
+            isSharing = false
+            return
+        }
+        
+        
+        isDuplicating = !isDuplicating
+        
+        
+        if isDuplicating{
+            prepareCellsForDuplication()
+        }
+        else {
+            doneEditingCellsAfterDuplication()
+        }
+        
+    }
+    
+    @IBAction func rightButtonAction(_ sender: UIBarButtonItem) {
+        
+        if (!isSharing) {
+            isSharing = true
+            
+            // go listen for multiple selection
+            return
+        }
+        
+        if let indepaths = tableView.indexPathsForSelectedRows , indepaths.count > 0   {
+            shareImages(at : indepaths)
+        }
+        
+        isSharing = false
+    }
+    
+    
+    // MARK: - Duplication
+    
+    private var isDuplicating = false {
+        didSet {
+            if self.isDuplicating {
+                leftBarButton?.title = "Cancel"
+            } else {
+                leftBarButton?.title = "Duplicate"
+            }
+        }
+    }
+    
+    private func prepareCellsForDuplication() {
+        for i in 0 ..< dreams.count {
+            tableView.cellForRow(at: IndexPath(row: i, section: 1))?.shouldIndentWhileEditing = true
+            tableView.cellForRow(at: IndexPath(row: i, section: 1))?.setEditing(true, animated: true)
+        }
+    }
+    
+    private func doneEditingCellsAfterDuplication() {
+        for i in 0 ..< dreams.count {
+            tableView.cellForRow(at: IndexPath(row: i, section: 1))?.setEditing(false, animated: true)
+        }
+    }
+    
+    private func copySelected(_ indexPath: IndexPath, _ tableView: UITableView) {
+        
+        copyDreamAndAppend(at: indexPath)
+        
+        updateTableViewAfterCopyDone(tableView, indexPath)
+        
+        doneCopying()
+    }
+    
+    private func updateTableViewAfterCopyDone(_ tableView: UITableView, _ indexPath: IndexPath) {
+        // update table after selection
+        tableView.insertRows(at: [IndexPath(row: dreams.count-1, section: 1)], with: UITableViewRowAnimation.automatic )
+        tableView.cellForRow(at: indexPath)?.setSelected(false, animated: true)
+        doneEditingCellsAfterDuplication()
+    }
+    
+    private func doneCopying() {
+        isDuplicating = false
+    }
+    
+    private func copyDreamAndAppend(at indexPath: IndexPath) {
+        
+        if let dreamCopy = dreams[indexPath.row].copy() as? Dream {
+            dreams.append(dreamCopy)
+        }
+    }
+    
     //MARK: - Sharing
     
-    var isSharing = false {
+    private var isSharing = false {
         didSet {
             if isSharing {
                 leftBarButton?.title = "Cancel"
-                rightBarButton = UIBarButtonItem(barButtonSystemItem: .done , target: self, action: #selector(imageShareAction))
+                rightBarButton = UIBarButtonItem(barButtonSystemItem: .done , target: self, action: #selector(rightButtonAction))
             } else {
                 leftBarButton?.title = "Duplicate"
-                rightBarButton = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(imageShareAction))
+                rightBarButton = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(rightButtonAction))
             }
             
             tableView.allowsMultipleSelectionDuringEditing = true
@@ -249,45 +259,39 @@ class LucidTableViewController: UITableViewController, FavCreatureTableViewDeleg
         }
     }
     
-    override func tableView(_ tableView: UITableView, shouldIndentWhileEditingRowAt indexPath: IndexPath) -> Bool {
-        return true
-    }
-    
-    @IBAction func imageShareAction(_ sender: UIBarButtonItem) {
+    private func getImagesSelected(at indepaths: [IndexPath]) -> [UIImage] {
         
-        if (!isSharing) {
-            isSharing = true
-            return
-        }
-        
-        
-        if let indepaths = tableView.indexPathsForSelectedRows , indepaths.count > 0   {
-            
-            //let image = UIImage(named: dreams[0].creature.imageIdentifier!)
-            
-            // set up activity view controller
-            let imagesToShare = indepaths.map {
-                (tableView.cellForRow(at: $0) as! LucidTableViewCell).lucidImageView.image
+        var images = [UIImage]()
+        for indexPath in indepaths {
+            let cell = tableView.cellForRow(at: indexPath)
+            if let lucidCell = cell as? LucidTableViewCell ,let image = lucidCell.getImage() {
+                images.append(image)
             }
-            let activityViewController = UIActivityViewController(activityItems: imagesToShare , applicationActivities: nil)
-            activityViewController.popoverPresentationController?.sourceView = self.view // so that iPads won't crash
-            
-            // exclude some activity types from the list (optional)
-            activityViewController.excludedActivityTypes = [ UIActivityType.airDrop, UIActivityType.postToFacebook ]
-            
-            // present the view controller
-            self.present(activityViewController, animated: true, completion: nil)
-            
         }
-        
-        isSharing = false
-        //tableView.setEditing(true, animated: true)
-        //
+        return images
     }
     
-    //MARK: - Delegation
+    private func shareImages(at indexpaths: [IndexPath]) {
+        
+        let imagesToShare =  getImagesSelected(at: indexpaths)
+        
+        let activityViewController = createShareActivityController(imagesToShare)
+        
+        self.present(activityViewController, animated: true, completion: nil)
+    }
     
-    func updateCreature(_ creature: Creature)  {
+    private func createShareActivityController(_ imagesToShare: [UIImage]) -> UIActivityViewController {
+        let activityViewController = UIActivityViewController(activityItems: imagesToShare  , applicationActivities: nil)
+        activityViewController.modalPresentationStyle = .popover
+        activityViewController.popoverPresentationController?.sourceView = self.view
+        activityViewController.popoverPresentationController?.sourceRect = CGRect(x: view.center.x, y: view.center.y, width: 0, height: 0)
+        
+        return activityViewController
+    }
+    
+    //MARK: - CollectionView Delegation
+    
+    func creatureIsSelected(_ creature: Creature) {
         favCreature = creature
         tableView.reloadData()
     }
@@ -296,26 +300,39 @@ class LucidTableViewController: UITableViewController, FavCreatureTableViewDeleg
     
     // MARK: - Navigation
     
-    override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
+    
+    private func shouldNavigate() -> Bool {
         return !isDuplicating && !isSharing
     }
     
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
-        if  segue.identifier == "ShowFavTableView" {
-            if let navcon = segue.destination as? UINavigationController, let favCreatureTableViewController = navcon.childViewControllers[0] as? FavCreatureTableViewController {
-                favCreatureTableViewController.delegate = self
-                favCreatureTableViewController.chosenCreature = favCreature
-            }
-        }
-        else if segue.identifier == "DreamSegueing", let cell  = sender as? LucidTableViewCell, let indexPath = tableView.indexPath(for: cell) {
-            if let dreamTableViewController  = segue.destination as? DreamTableViewController {
-                
-                dreamTableViewController.mainDream = dreams[indexPath.row]
-            }
+    
+    private func navigateFromCell(at indexPath: IndexPath) {
+        if indexPath.section == 0 {
+            goForFavouriteCreatureActivity()
+            
+            
+        } else {
+            goForDreamComposingActivity(indexPath)
         }
     }
     
+    private func goForFavouriteCreatureActivity()  {
+        if let navcon = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "FavCreatureViewControllerNavigator") as? UINavigationController ,
+            let targetViewController =  navcon.childViewControllers[0] as? FavCreatureTableViewController {
+            
+            targetViewController.configure(delegate: self, chosenCreature: favCreature)
+            self.present(navcon, animated: true, completion: nil)
+        }
+    }
+    
+    private func goForDreamComposingActivity(_ indexPath: IndexPath) {
+        if let rootNavcon = navigationController ,
+            let targetViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "DreamsViewConroller") as? DreamTableViewController {
+            
+            targetViewController.config(mainDream: dreams[indexPath.row])
+            rootNavcon.pushViewController(targetViewController, animated: true)
+            
+        }
+    }
     
 }

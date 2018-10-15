@@ -9,79 +9,85 @@
 import UIKit
 
 
-protocol FavCreatureTableViewDelegate : class {
-    func updateCreature(_ creature : Creature)
-}
 
 class FavCreatureTableViewController: UITableViewController {
     
-    weak var delegate : FavCreatureTableViewDelegate?
-    var lastSelectedCell : LucidTableViewCell?
-    var chosenCreature : Creature?
-    let allCreatures = LucidCreaturesFactory.getAllCreatures()
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
+    // MARK: - Init
+    
+    private weak var delegate : SelectedCreaturePreviewDelegate?
+    private var selectedCell : LucidTableViewCell?
+    private var chosenCreature : Creature?
+    private  let allCreatures = LucidCreaturesFactory.getAllCreatures()
+    private static let lucidDreamCellHeight =  CGFloat(90.0 * Constants.resizeFactor)
+    
+    
+    public func configure(delegate : SelectedCreaturePreviewDelegate? , chosenCreature : Creature?){
+        self.delegate = delegate
+        self.chosenCreature = chosenCreature
     }
+    
 
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
+       
         return 1
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
+     
         return allCreatures.count
     }
 
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+       
+
+        return prepareCellForCreature(indexPath) ?? UITableViewCell()
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return FavCreatureTableViewController.lucidDreamCellHeight
+    }
+    
+     // MARK: - TableView Cells preparation
+    
+    private func prepareCellForCreature(_ indexPath : IndexPath) -> UITableViewCell?{
         let cell = tableView.dequeueReusableCell(withIdentifier: "FavCreature", for: indexPath)
-
-        if let lucidCell =  cell as? LucidTableViewCell {
-            lucidCell.lucidLabel.text = allCreatures[indexPath.row].name
-            let imageIdentifier = allCreatures[indexPath.row].imageIdentifier
-            lucidCell.lucidImageView.contentMode = .scaleAspectFit
-            lucidCell.lucidImageView.image = UIImage(named: imageIdentifier!)
-
+        if let lucidCell =  cell as? LucidTableViewCell, let imageId = allCreatures[indexPath.row].imageIdentifier{
+            let title = allCreatures[indexPath.row].name
+            let labelSize = lucidCell.getImageViewSize()
+            let image = ImageFactory.createImage(from: imageId, count: 1, of: labelSize)
+            
+            lucidCell.configure(title: title, image: image)
+            
             if chosenCreature == allCreatures[indexPath.row] {
                 lucidCell.accessoryType = .checkmark
-                lastSelectedCell = lucidCell
+                selectedCell = lucidCell
             }
-           
             
+            return cell
         }
-
-        return cell
+        return nil
     }
+    
+    // MARK: - Table view selection
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        lastSelectedCell?.accessoryType = .none
-        lastSelectedCell = tableView.cellForRow(at: indexPath) as? LucidTableViewCell
-        lastSelectedCell?.accessoryType = .checkmark
-        lastSelectedCell?.setSelected(false, animated: true)
+        selectedCell?.accessoryType = .none
+        selectedCell = tableView.cellForRow(at: indexPath) as? LucidTableViewCell
+        selectedCell?.accessoryType = .checkmark
+        selectedCell?.setSelected(false, animated: true)
         chosenCreature = allCreatures[indexPath.row]
     }
-    
-   
-    func close() {
-        self.presentingViewController?.dismiss(animated: true)
-    }
-    
     
     // MARK: - Actions
     
     @IBAction func DoneFunction(_ sender: UIBarButtonItem) {
-        
-       delegate?.updateCreature(chosenCreature!)
+        if let chosen = chosenCreature {
+             delegate?.creatureIsSelected(chosen)
+        }
+      
         
         close()
     }
@@ -92,48 +98,8 @@ class FavCreatureTableViewController: UITableViewController {
         close()
     }
     
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
+    func close() {
+        self.presentingViewController?.dismiss(animated: true)
     }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
-    
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
-    }
-    
 
 }

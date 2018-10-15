@@ -10,65 +10,10 @@ import UIKit
 
 class LucidTableViewCell: UITableViewCell {
 
-    override func awakeFromNib() {
-        super.awakeFromNib()
-    }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
-    }
-
     @IBOutlet weak var lucidLabel: UILabel!
     @IBOutlet weak var lucidImageView: UIImageView!
     
-    
-    
-    func addImages(for name:String, with number:Int){
-        
-        
-        //let size = CGSize(width: lucidImageView.frame.width, height: lucidImageView.frame.height )
-        let image = UIImage(named: name)
-        let resizeConstant = CGFloat(Double(number+2)/3)
-        //let imageNewSize = CGSize(width: (image?.size.width)! * resizeConstant, height: (image?.size.height)! * resizeConstant) // the mgaic formula :D
-        let imageNewSize =  (image?.size)!
-        let imaginaryImageViewHeight = (image?.size.height)! * resizeConstant
-        let imaginaryImageViewWidth = (lucidImageView.frame.width * imaginaryImageViewHeight ) / lucidImageView.frame.height
-        UIGraphicsBeginImageContextWithOptions(CGSize(width: imaginaryImageViewWidth, height: imaginaryImageViewHeight), false, 0.0)
-     
-        
-        
-        //var x = number == 1 ? CGFloat(0) : imageNewWidth / CGFloat(2)
-        //var y = number == 1 ? CGFloat(0) : imageNewHeight / CGFloat(2)
-        var x = (imaginaryImageViewWidth - imaginaryImageViewHeight)/CGFloat(2)
-        var y = CGFloat(0)
-        for _ in 0..<number {
-            let image = UIImage(named: name)
-            image!.draw(in: CGRect(x: x, y: y, width: imageNewSize.width , height: imageNewSize.height))
-            x  = x + imaginaryImageViewWidth / CGFloat(2*number)
-            y = y + (image?.size.height)! /  CGFloat(3)
-            
-        }
-
-        
-        let newImage:UIImage = UIGraphicsGetImageFromCurrentImageContext()!
-        UIGraphicsEndImageContext()
-        
-        
-        lucidImageView.image = newImage
-       lucidImageView.contentMode = .scaleAspectFit
-        
-    }
-    
-}
-extension UIView {
-    func fadeTransition(_ duration:CFTimeInterval) {
-        let animation = CATransition()
-        animation.timingFunction = CAMediaTimingFunction(name:
-            kCAMediaTimingFunctionEaseInEaseOut)
-        animation.type = kCATransitionFade
-        animation.duration = duration
-        layer.add(animation, forKey: kCATransitionFade)
+    override func awakeFromNib() {
+        lucidImageView.contentMode = .scaleAspectFit
     }
 }
