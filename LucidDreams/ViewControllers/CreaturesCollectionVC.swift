@@ -11,16 +11,26 @@ import UIKit
 private let reuseIdentifier = "CreatureCollectionCell"
 
 
-class CreaturesCollectionVCDelegate: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+class CreaturesCollectionVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
-    var allCreatures = LucidCreaturesFactory.getAllCreatures()
-    weak var delegate : SelectedCreaturePreviewDelegate?
+    // MARK: Init
     
-    var creaturesCollectionView: UICollectionView? {
+    private var allCreatures = LucidCreaturesFactory.getAllCreatures()
+    private weak var delegate : SelectedCreaturePreviewDelegate?
+    private static let creatureCollectionViewCellSize = CGSize(width: 90.0 * Constants.resizeFactor, height: 90.0 * Constants.resizeFactor)
+    
+    
+    
+    private var creaturesCollectionView: UICollectionView? {
         didSet{
             creaturesCollectionView?.dataSource = self
             creaturesCollectionView?.delegate = self
         }
+    }
+    public func configure(creaturesCollectionView: UICollectionView?, delegate: SelectedCreaturePreviewDelegate?) {
+        
+        self.creaturesCollectionView = creaturesCollectionView
+        self.delegate = delegate
     }
     
     // MARK: UICollectionViewDataSource
@@ -30,9 +40,13 @@ class CreaturesCollectionVCDelegate: UIViewController, UICollectionViewDelegate,
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! CreatureCollectionViewCell
+       
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath)
+        if let creatureCollectionCell = cell as? CreatureCollectionViewCell{
         let image = UIImage(named: allCreatures[indexPath.row].imageIdentifier!)
-        cell.configure(image: image!)
+            creatureCollectionCell.configure(image: image)
+            
+        }
         return cell
     }
     
@@ -41,7 +55,7 @@ class CreaturesCollectionVCDelegate: UIViewController, UICollectionViewDelegate,
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return Constants.creatureCollectionViewCellSize
+        return CreaturesCollectionVC.creatureCollectionViewCellSize
     }
     
 }

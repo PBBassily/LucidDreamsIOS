@@ -19,3 +19,4 @@ protocol SelectedCreaturePreviewDelegate: class {
  */
      func  creatureIsSelected(_ creature : Creature)
 }
+

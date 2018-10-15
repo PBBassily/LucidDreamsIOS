@@ -11,12 +11,13 @@ import UIKit
 
 
 class LucidTableViewController: UITableViewController, SelectedCreaturePreviewDelegate{
-   
+    
     
     //MARK: -  Init
     private var favCreature = LucidCreaturesFactory.getDefaultCreature()
     private var dreams = LucidDreamsFactory.getDeafultDreamsBatch()
-   
+    private static let lucidDreamCellHeight =  CGFloat(90.0 * Constants.resizeFactor)
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -66,7 +67,7 @@ class LucidTableViewController: UITableViewController, SelectedCreaturePreviewDe
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return Constants.lucidDreamCellHeight
+        return LucidTableViewController.lucidDreamCellHeight
     }
     
     // MARK: - TableView Cells preparation
@@ -75,7 +76,7 @@ class LucidTableViewController: UITableViewController, SelectedCreaturePreviewDe
         
         if let cell = tableView.dequeueReusableCell(withIdentifier: "LucidDreamCell", for: indexPath) as? LucidTableViewCell,
             let imageId = favCreature.imageIdentifier , let name = favCreature.name {
-        
+            
             let labelSize = cell.getImageViewSize()
             let creatureImage = ImageFactory.createImage(from: imageId, count:   1, of: labelSize)
             
@@ -89,13 +90,13 @@ class LucidTableViewController: UITableViewController, SelectedCreaturePreviewDe
     
     private func prepareCellForDreams(_ indexPath: IndexPath) -> UITableViewCell? {
         if let cell = tableView.dequeueReusableCell(withIdentifier: "LucidDreamCell", for: indexPath) as? LucidTableViewCell {
-           
+            
             let dream = dreams[indexPath.row]
             let title = dream.title.trimmingCharacters(in: .whitespacesAndNewlines)
             dream.title = title == "" ? "Untitled" : title
             dream.number = dream.number < 1 ? 1 : dream.number
             let labelSize = cell.getImageViewSize()
-            let image = ImageFactory.createImage(from: dream.creature.imageIdentifier!, count: dream.number, of: labelSize)
+            let image = ImageFactory.createImage(from: dream.creature?.imageIdentifier, count: dream.number, of: labelSize)
             cell.configure(title: dream.title, image: image)
             cell.accessoryType  = .disclosureIndicator
             return cell
@@ -185,7 +186,7 @@ class LucidTableViewController: UITableViewController, SelectedCreaturePreviewDe
         
         isSharing = false
     }
-
+    
     
     // MARK: - Duplication
     
@@ -234,10 +235,11 @@ class LucidTableViewController: UITableViewController, SelectedCreaturePreviewDe
     
     private func copyDreamAndAppend(at indexPath: IndexPath) {
         
-        let dreamCopy = dreams[indexPath.row].copy() as! Dream
-        dreams.append(dreamCopy)
+        if let dreamCopy = dreams[indexPath.row].copy() as? Dream {
+            dreams.append(dreamCopy)
+        }
     }
-
+    
     //MARK: - Sharing
     
     private var isSharing = false {
@@ -270,11 +272,11 @@ class LucidTableViewController: UITableViewController, SelectedCreaturePreviewDe
     }
     
     private func shareImages(at indexpaths: [IndexPath]) {
-     
+        
         let imagesToShare =  getImagesSelected(at: indexpaths)
         
         let activityViewController = createShareActivityController(imagesToShare)
-     
+        
         self.present(activityViewController, animated: true, completion: nil)
     }
     
@@ -307,7 +309,7 @@ class LucidTableViewController: UITableViewController, SelectedCreaturePreviewDe
     private func navigateFromCell(at indexPath: IndexPath) {
         if indexPath.section == 0 {
             goForFavouriteCreatureActivity()
-
+            
             
         } else {
             goForDreamComposingActivity(indexPath)
@@ -318,9 +320,8 @@ class LucidTableViewController: UITableViewController, SelectedCreaturePreviewDe
         if let navcon = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "FavCreatureViewControllerNavigator") as? UINavigationController ,
             let targetViewController =  navcon.childViewControllers[0] as? FavCreatureTableViewController {
             
-            targetViewController.delegate = self
-            targetViewController.chosenCreature = favCreature
-             self.present(navcon, animated: true, completion: nil)
+            targetViewController.configure(delegate: self, chosenCreature: favCreature)
+            self.present(navcon, animated: true, completion: nil)
         }
     }
     
@@ -328,7 +329,7 @@ class LucidTableViewController: UITableViewController, SelectedCreaturePreviewDe
         if let rootNavcon = navigationController ,
             let targetViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "DreamsViewConroller") as? DreamTableViewController {
             
-            targetViewController.mainDream = dreams[indexPath.row]
+            targetViewController.config(mainDream: dreams[indexPath.row])
             rootNavcon.pushViewController(targetViewController, animated: true)
             
         }

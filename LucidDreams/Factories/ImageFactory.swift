@@ -10,11 +10,13 @@ import Foundation
 import UIKit
 class ImageFactory {
     
-    public static func createImage(from imageIdentifer :String, count number : Int, of size: CGSize) -> UIImage {
+    public static func createImage(from imageIdentifer :String?, count number : Int, of size: CGSize) -> UIImage? {
         
+        if imageIdentifer == nil{
+            return nil
+        }
         
-        
-        let image = UIImage(named: imageIdentifer)
+        let image = UIImage(named: imageIdentifer!)
         let resizeConstant = CGFloat(Double(number+2)/3)
         let imageNewSize =  (image?.size)!
         let imaginaryImageViewHeight = (image?.size.height)! * resizeConstant
@@ -28,7 +30,7 @@ class ImageFactory {
         var y = CGFloat(0)
         
         for _ in 0..<number {
-            let image = UIImage(named: imageIdentifer)
+            let image = UIImage(named: imageIdentifer!)
             image!.draw(in: CGRect(x: x, y: y, width: imageNewSize.width , height: imageNewSize.height))
             x  = x + imaginaryImageViewWidth / CGFloat(2*number)
             y = y + (image?.size.height)! /  CGFloat(3)

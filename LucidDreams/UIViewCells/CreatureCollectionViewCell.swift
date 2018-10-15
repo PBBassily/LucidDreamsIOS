@@ -13,11 +13,12 @@ class CreatureCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet private weak var creatureImageView: UIImageView!
     
-    public func configure (image : UIImage){
+    public func configure (image : UIImage?){
         creatureImageView.image = image
     }
     
     override func awakeFromNib() {
+        super.awakeFromNib()
         creatureImageView.contentMode = .scaleAspectFit
         creatureImageView.layer.borderColor = UIColor.blue.cgColor
     }

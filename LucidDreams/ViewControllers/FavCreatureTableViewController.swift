@@ -14,11 +14,17 @@ class FavCreatureTableViewController: UITableViewController {
     
     // MARK: - Init
     
-    public weak var delegate : SelectedCreaturePreviewDelegate?
+    private weak var delegate : SelectedCreaturePreviewDelegate?
     private var selectedCell : LucidTableViewCell?
-    internal var chosenCreature : Creature?
+    private var chosenCreature : Creature?
     private  let allCreatures = LucidCreaturesFactory.getAllCreatures()
+    private static let lucidDreamCellHeight =  CGFloat(90.0 * Constants.resizeFactor)
     
+    
+    public func configure(delegate : SelectedCreaturePreviewDelegate? , chosenCreature : Creature?){
+        self.delegate = delegate
+        self.chosenCreature = chosenCreature
+    }
     
 
     // MARK: - Table view data source
@@ -41,7 +47,7 @@ class FavCreatureTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return Constants.lucidDreamCellHeight
+        return FavCreatureTableViewController.lucidDreamCellHeight
     }
     
      // MARK: - TableView Cells preparation
@@ -53,7 +59,7 @@ class FavCreatureTableViewController: UITableViewController {
             let labelSize = lucidCell.getImageViewSize()
             let image = ImageFactory.createImage(from: imageId, count: 1, of: labelSize)
             
-            lucidCell.configure(title: title!, image: image)
+            lucidCell.configure(title: title, image: image)
             
             if chosenCreature == allCreatures[indexPath.row] {
                 lucidCell.accessoryType = .checkmark
@@ -78,8 +84,10 @@ class FavCreatureTableViewController: UITableViewController {
     // MARK: - Actions
     
     @IBAction func DoneFunction(_ sender: UIBarButtonItem) {
-        
-       delegate?.creatureIsSelected(chosenCreature!)
+        if let chosen = chosenCreature {
+             delegate?.creatureIsSelected(chosen)
+        }
+      
         
         close()
     }

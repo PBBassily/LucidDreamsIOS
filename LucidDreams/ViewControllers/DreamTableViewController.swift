@@ -11,12 +11,21 @@ import UIKit
 class DreamTableViewController: UITableViewController, SelectedCreaturePreviewDelegate{
     
     
-    var mainDream : Dream?
+    private var mainDream : Dream?
     
-    var dreamPreviewCell : LucidTableViewCell?
+    private var dreamPreviewCell : LucidTableViewCell?
     
-    var creaturesCVDelegate = CreaturesCollectionVCDelegate()
+    private var creaturesCVDelegate = CreaturesCollectionVC()
     
+    private  static let  dreamTableViewCellsHeight   = [150.0, 60.0, 60.0, 200.0].map({CGFloat($0 * Constants.resizeFactor)})
+    
+     // MARK: - Config
+    
+    public func config(mainDream : Dream?){
+        
+        self.mainDream = mainDream
+        
+    }
     
     // MARK: - Table view data source
     
@@ -43,7 +52,11 @@ class DreamTableViewController: UITableViewController, SelectedCreaturePreviewDe
     
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        // Configure the cell...
+        
+        if mainDream == nil {
+            return UITableViewCell()
+        }
+        
         let cell : UITableViewCell
         
         if indexPath.section == 0 {
@@ -52,11 +65,11 @@ class DreamTableViewController: UITableViewController, SelectedCreaturePreviewDe
             
         } else if indexPath.section == 1 {
             
-            cell = prepareCellForInput(at : indexPath, content: "\((mainDream?.title)!)", numbersOnly : false, selector: #selector(descriptionTextDidChange))
+            cell = prepareCellForInput(at : indexPath, content: mainDream!.title, numbersOnly : false, selector: #selector(descriptionTextDidChange))
             
         } else if indexPath.section == 2  {
             
-            cell = prepareCellForInput(at: indexPath, content: "\((mainDream?.number)!)", numbersOnly: true, selector:  #selector(countTextDidChange))
+            cell = prepareCellForInput(at: indexPath, content: "\(mainDream!.number)", numbersOnly: true, selector:  #selector(countTextDidChange))
             
         } else {
             cell = prepareCellForAllCreatures(at: indexPath)
@@ -69,7 +82,7 @@ class DreamTableViewController: UITableViewController, SelectedCreaturePreviewDe
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         switch indexPath.section {
-        case 0..<4 : return CGFloat(Constants.dreamTableViewCellsHeight[indexPath.section])
+        case 0..<4 : return DreamTableViewController.dreamTableViewCellsHeight[indexPath.section]
         default : return CGFloat(0)
         }
     }
@@ -82,27 +95,28 @@ class DreamTableViewController: UITableViewController, SelectedCreaturePreviewDe
         
         if let lucidCell = cell as? LucidTableViewCell {
             let title = mainDream?.title
-            let image = UIImage(named: mainDream?.creature.imageIdentifier ?? "" )
-            lucidCell.configure(title: title!, image: image!)
+            let image = UIImage(named: mainDream?.creature?.imageIdentifier ?? "" )
+            lucidCell.configure(title: title, image: image)
             dreamPreviewCell = lucidCell
             
         }
         return cell
     }
     
-    private func prepareCellForInput(at indexPath: IndexPath,content : String, numbersOnly : Bool, selector: Selector) -> UITableViewCell {
+    private func prepareCellForInput(at indexPath: IndexPath,content : String?, numbersOnly : Bool, selector: Selector) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "InputCell", for: indexPath)
         
         if let inputCell = cell as? InputTableViewCell {
             
-            inputCell.inputTextField.text = content
+            inputCell.configure(text: content)
             
-            inputCell.inputTextField.addTarget(self, action: selector, for: UIControlEvents.editingChanged)
+            inputCell.addEditingChangedListener(target: self,selector: selector)
             
-            inputCell.inputTextField.keyboardType =  numbersOnly ? .asciiCapableNumberPad : .default
+            if numbersOnly {
+                inputCell.setNumberPadOnly()
+            }
             
         }
-        
         return cell
     }
     
@@ -110,8 +124,8 @@ class DreamTableViewController: UITableViewController, SelectedCreaturePreviewDe
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "CollectViewCell", for: indexPath)
         if let collectionViewCell = cell as? AllCreaturesTableViewCell{
-            creaturesCVDelegate.delegate = self
-            creaturesCVDelegate.creaturesCollectionView = collectionViewCell.creaturesCollectionView
+            creaturesCVDelegate.configure(creaturesCollectionView: collectionViewCell.creaturesCollectionView, delegate: self)
+           
         }
         return cell
     }
@@ -120,29 +134,19 @@ class DreamTableViewController: UITableViewController, SelectedCreaturePreviewDe
     //MARK: - Input textfields listeners
     
     
-//    private func animateChange(text: String ) {
-//        UIView.transition(
-//            with : (self.dreamPreviewCell?.lucidLabel)!,
-//            duration: 0.5,
-//            options: UIViewAnimationOptions.transitionCrossDissolve,
-//            animations: {
-//                (self.dreamPreviewCell?.lucidLabel)!.text = text
-//        },
-//            completion: nil)
-//    }
-    
     @objc func descriptionTextDidChange( textField: UITextField) {
-        
-        mainDream?.title=textField.text!
-        
-        dreamPreviewCell?.animateChange(text: textField.text!)
+        if let text = textField.text {
+            mainDream?.title = text
+            dreamPreviewCell?.animateChange(text: text)
+        }
+      
         
         
     }
     
     @objc func countTextDidChange( textField: UITextField) {
         
-        mainDream?.number = Int(textField.text!) ?? 1
+        mainDream?.number = Int(textField.text ?? "") ?? 1
     }
     
     

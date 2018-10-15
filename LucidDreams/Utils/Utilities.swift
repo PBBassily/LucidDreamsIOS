@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 
 class Constants {
-     private static  var resizeFactor : Double  {
+     public static  var resizeFactor : Double  {
         get {
             if UIDevice.current.userInterfaceIdiom == .pad {
                 return 1.5
@@ -19,10 +19,10 @@ class Constants {
         }
         
     }
-    static let  dreamTableViewCellsHeight   = [150.0, 60.0, 60.0, 200.0].map({CGFloat($0 * resizeFactor)})
+   
     
     
-    static let creatureCollectionViewCellSize = CGSize(width: 90.0 * resizeFactor, height: 90.0 * resizeFactor)
     
-    static let lucidDreamCellHeight =  CGFloat(90.0 * resizeFactor)
+    
+    
 }
