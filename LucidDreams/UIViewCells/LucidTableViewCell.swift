@@ -13,6 +13,7 @@ class LucidTableViewCell: UITableViewCell {
     @IBOutlet weak var lucidLabel: UILabel!
     @IBOutlet weak var lucidImageView: UIImageView!
     
-    
-    
+    override func awakeFromNib() {
+        lucidImageView.contentMode = .scaleAspectFit
+    }
 }

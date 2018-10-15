@@ -12,14 +12,14 @@ class Dream : NSCopying{
     
     
     var number : Int
-    var creature : Creature
+    var creature : Creature?
     var title : String
     
-    init(number : Int , creature : Creature, title: String) {
+    init(number : Int? , creature : Creature?, title: String?) {
         
-        self.number = number
-        self.creature = creature
-        self.title  = title
+        self.number = number ?? 1
+        self.creature = creature 
+        self.title  = title ?? ""
         
     }
     

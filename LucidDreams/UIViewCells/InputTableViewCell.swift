@@ -10,8 +10,9 @@ import UIKit
 
 class InputTableViewCell: UITableViewCell, UITextFieldDelegate {
     
-    @IBOutlet weak var inputTextField: UITextField!
-
+    
+    @IBOutlet private weak var inputTextField: UITextField!
+    
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -23,7 +24,17 @@ class InputTableViewCell: UITableViewCell, UITextFieldDelegate {
         
     }
     
+    public func  configure(text: String?){
+        inputTextField.text = text
+    }
     
+    public func addEditingChangedListener(target : Any? ,selector: Selector){
+        inputTextField.addTarget(target , action: selector, for: UIControlEvents.editingChanged)
+    }
+    
+    public func setNumberPadOnly(){
+        inputTextField.keyboardType =  .asciiCapableNumberPad
+    }
     private func initToolBarForKeyBoard() {
         
         let toolbar:UIToolbar = UIToolbar(frame: CGRect(x: 0, y: 0,  width: self.frame.size.width, height: 30))
@@ -36,10 +47,10 @@ class InputTableViewCell: UITableViewCell, UITextFieldDelegate {
     
     
     @objc private func doneEditingButtonAction() {
-    
+        
         inputTextField.resignFirstResponder()
     }
-
+    
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         inputTextField.resignFirstResponder()
@@ -48,10 +59,7 @@ class InputTableViewCell: UITableViewCell, UITextFieldDelegate {
     
     
     
-
-  
     
     
-
     
 }
